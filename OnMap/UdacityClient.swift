@@ -12,8 +12,10 @@ class UdacityClient {
     
     
     struct Auth {
+        //static var udacity = [PostSession.username: PostSession.password]()
         static var userKey = ""
         static var pswdKey = ""
+        static var key = ""
         static var sessionId = ""
         
     }
@@ -51,7 +53,7 @@ class UdacityClient {
         }
     }
     
-    class func getStudentLocations ( completion: @escaping ([Student], Error?) -> Void ) {
+    class func getStudentLocations ( completion: @escaping ([Location], Error?) -> Void ) {
         let task = URLSession.shared.dataTask(with: Endpoints.getStudentLocations.url) { data, response, error in
             guard let data = data else {
                 completion ([], error)
@@ -59,8 +61,9 @@ class UdacityClient {
             }
             let decoder = JSONDecoder()
             do {
-                let responseObject = try decoder.decode(StudentResults.self, from: data)
-                completion( responseObject.results, nil)
+                let response = try decoder.decode(LocationResults.self, from: data)
+                print(response.results)
+                completion( response.results, nil)
             }catch {
                 completion([], error)
             }
@@ -69,7 +72,8 @@ class UdacityClient {
     }
     
     class func createSession (username: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
-        let body = PostSession(udacity: [username: password], username: username, password: password)
+        let udacityDict = Profile(username: username, password: password)
+        let body = PostSession(udacity: udacityDict, username: username, password: password)
         
         var request = URLRequest(url: Endpoints.createOrDeleteSession.url)
         request.httpMethod = "POST"
@@ -86,17 +90,23 @@ class UdacityClient {
         }
         let decoder = JSONDecoder()
         do {
-            let responseObject = try decoder.decode([String: Session].self, from: data)
-            let id = responseObject.values.map({$0})
-            print(id)
-            //Auth.sessionId = id
+            let range = 5..<data.count
+            let dataSubset = data.subdata(in: range) //subset of data
             
+            let response = try decoder.decode(SessionResponse.self, from: dataSubset)
+            DispatchQueue.main.async {
+                Auth.key = response.account?.key ?? "no account"
+                Auth.sessionId = response.session?.id ?? "no sessionid"
+                completion(true, nil)
+            }
+            print(response)
+            print(Auth.key)
+            print(Auth.sessionId)
             print("session set")
-            completion(true, nil)
         }catch {
             print(error)
             completion(false, error)
-                }
+        }
         }
         task.resume()
     }

@@ -9,8 +9,9 @@
 import Foundation
 
 struct PostSession: Codable {
-    let udacity: [String: String]
+    let udacity: Profile
     let username: String
     let password: String
-    
 }
+
+

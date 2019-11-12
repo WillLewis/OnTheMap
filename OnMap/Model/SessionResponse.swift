@@ -10,7 +10,7 @@ import Foundation
 import CoreFoundation
 
 struct SessionResponse: Codable {
-    let account: Account
-    let session: Session
+    let account: Account?
+    let session: Session?
     
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct StudentResults: Codable {
+struct LocationResults: Codable {
     
-    let results: [Student]
+    let results: [Location]
 }

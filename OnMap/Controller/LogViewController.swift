@@ -28,16 +28,18 @@ class LogViewController: UIViewController {
     
     @IBAction func loginTap(_ sender: Any) {
         setLogginIn(true)
-        UdacityClient.createSession(completion: handleSessionResponse(success:error:))
-
+        UdacityClient.createSession(username: emailTextField.text ?? "", password: passwordTextField.text ?? "", completion: handleSessionResponse(success:error:))
     }
     
     func handleSessionResponse( success: Bool, error: Error?){
         setLogginIn(false)
-        if success{
-            performSegue(withIdentifier: "completeLogin", sender: nil)
-        } else {
-            showLoginFailure(message: error?.localizedDescription ?? "")
+       
+        DispatchQueue.main.async {
+            if success{
+                self.performSegue(withIdentifier: "completeLogin", sender: nil)
+            } else {
+                self.showLoginFailure(message: error?.localizedDescription ?? "")
+            }
         }
     }
     
@@ -49,14 +51,17 @@ class LogViewController: UIViewController {
     }
     
     func setLogginIn (_ loggingIn: Bool) {
-        if loggingIn {
-            activityIndicator.startAnimating()
-        } else {
-            activityIndicator.stopAnimating()
+        DispatchQueue.main.async {
+            if loggingIn {
+                self.activityIndicator.startAnimating()
+            } else {
+                self.activityIndicator.stopAnimating()
+            }
+            self.emailTextField.isEnabled = !loggingIn
+            self.passwordTextField.isEnabled = !loggingIn
+            self.loginButton.isEnabled = !loggingIn
         }
-        emailTextField.isEnabled = !loggingIn
-        passwordTextField.isEnabled = !loggingIn
-        loginButton.isEnabled = !loggingIn
+        
     }
     
 
