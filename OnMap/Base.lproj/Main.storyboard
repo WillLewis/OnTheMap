@@ -45,10 +45,10 @@
             </objects>
             <point key="canvasLocation" x="750" y="-320"/>
         </scene>
-        <!--Second-->
+        <!--ListView-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
-                <viewController storyboardIdentifier="TableViewController" id="8rJ-Kc-sve" customClass="TableViewController" customModule="OnMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TableViewController" id="8rJ-Kc-sve" userLabel="ListView" customClass="TableViewController" customModule="OnMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QS5-Rx-YEW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -82,6 +82,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="8rJ-Kc-sve" id="I3n-Eo-zoH"/>
+                                    <outlet property="delegate" destination="8rJ-Kc-sve" id="vAT-QR-Q3g"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -95,7 +99,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Second" image="second" id="cPa-gy-q4n"/>
                     <connections>
-                        <outlet property="tableView" destination="mAB-uV-zaC" id="EjJ-9v-Uh3"/>
+                        <outlet property="tableView" destination="mAB-uV-zaC" id="jSv-0o-LyH"/>
                         <segue destination="uIZ-91-H5q" kind="showDetail" identifier="tableToWeb" id="wge-et-XJO"/>
                     </connections>
                 </viewController>

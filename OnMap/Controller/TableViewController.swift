@@ -17,8 +17,9 @@ class TableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        _ = UdacityClient.getStudentLocations() { locations, error in
+        UdacityClient.getStudentLocations() { locations, error in
                 LocationModel.locations = locations
+       // print(locations)
         }
             
         DispatchQueue.main.async{
@@ -57,13 +58,13 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
         
         let location = LocationModel.locations[indexPath.row]
         
-        cell.textLabel?.text = location.firstName + " " + location.lastName
+        cell.textLabel?.text = (location.firstName ?? "") + "" + (location.lastName ?? "")
         cell.imageView?.image = UIImage(named: "icon_pin")
         
-        if let detailTextLabel = cell.detailTextLabel {
-            detailTextLabel.text =  "\(location.mediaURL)"
+       // if let detailTextLabel = cell.detailTextLabel {
+        //    detailTextLabel.text =  "\(location.mediaURL ?? https:)"
 
-        }
+       // }
         
         return cell
     }

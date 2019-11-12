@@ -41,7 +41,7 @@ class UdacityClient {
             case .createOrDeleteSession:
                 return Endpoints.base + "/session"
             case .getStudentLocations:
-                return Endpoints.base + "/StudentLocation" + Endpoints.parameter + Endpoints.reverseOrder
+                return Endpoints.base + "/StudentLocation" + Endpoints.parameter + Endpoints.reverseOrder + Endpoints.parameter + Endpoints.limit100
             case .addStudentLocation:
                 return Endpoints.base + "/StudentLocation"
             case .updateStudentLocation(let studentKey):
@@ -57,15 +57,22 @@ class UdacityClient {
         let task = URLSession.shared.dataTask(with: Endpoints.getStudentLocations.url) { data, response, error in
             guard let data = data else {
                 completion ([], error)
+                print("problem with get StudentLocation URL")
                 return
             }
+            print("URL session for getStudentLocations worked")
             let decoder = JSONDecoder()
             do {
                 let response = try decoder.decode(LocationResults.self, from: data)
-                print(response.results)
+                //print(String(data: data, encoding: .utf8))
                 completion( response.results, nil)
+            } catch let error as NSError { /* cast error to `NSError` */
+               print(error.domain)
+               print(error.code)
+               print(error.userInfo)
             }catch {
                 completion([], error)
+                print(error)
             }
         }
         task.resume()
@@ -99,10 +106,10 @@ class UdacityClient {
                 Auth.sessionId = response.session?.id ?? "no sessionid"
                 completion(true, nil)
             }
-            print(response)
-            print(Auth.key)
-            print(Auth.sessionId)
-            print("session set")
+            
+            print("key is \(Auth.key)")
+            print("sessionId is \(Auth.sessionId)")
+            print("session is all good")
         }catch {
             print(error)
             completion(false, error)
