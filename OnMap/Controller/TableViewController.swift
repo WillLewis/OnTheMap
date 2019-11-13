@@ -14,6 +14,33 @@ class TableViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var selectedIndex = 0
+    var firstName = ""
+    var lastName = ""
+    lazy var name = firstName + " " + lastName
+  
+    //lazy var name: String = firstName + "+" + lastName  //has to be lazy bc its a computed variable that depends on another instance property
+    
+    enum Google {
+        static let base = "https://www.google.com/search?q="
+        static let space = "+"
+        
+        case google(String)
+        case linkedin(String)
+        
+        var stringValue: String {
+            switch self {
+            case .google(let name):
+                return Google.base + "\(name)"
+            case .linkedin(let name):
+                return Google.base + "\(name)" + Google.space + "linkedin"
+            }
+        }
+        var url: URL{
+            return URL(string: stringValue) ?? URL(string: "https://udacity.com")!
+        }
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,17 +48,17 @@ class TableViewController: UIViewController {
                 LocationModel.locations = locations
        // print(locations)
         }
-            
         DispatchQueue.main.async{
             self.tableView?.reloadData()
         }
+        
     }
     
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         DispatchQueue.main.async {
+            self.navigationItem.title = "Approved Links or Google"
             self.tableView?.reloadData()
         }
         
@@ -58,21 +85,68 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
         
         let location = LocationModel.locations[indexPath.row]
         
-        cell.textLabel?.text = (location.firstName ?? "") + "" + (location.lastName ?? "")
+        let first = (location.firstName ?? "")
+        let last = (location.lastName ?? "")
+    
+        
+        firstName = (location.firstName ?? "")
+        lastName = (location.lastName ?? "")
+        //let combined = firstName + "+" + lastName
+        //name = combined
+        cell.textLabel?.text = firstName + " " + lastName
         cell.imageView?.image = UIImage(named: "icon_pin")
         
-       // if let detailTextLabel = cell.detailTextLabel {
-        //    detailTextLabel.text =  "\(location.mediaURL ?? https:)"
-
-       // }
+       if let detailTextLabel = cell.detailTextLabel {
+        detailTextLabel.text =  setURL(urlString: location.mediaURL, first: first, last: last)
+        }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        let location = LocationModel.locations[indexPath.row]
+        
         let detailController = self.storyboard!.instantiateViewController(withIdentifier: "WebViewController") as! WebViewController
-        //detailController.locationTitle = self.LocationModel.locations[(indexPath as NSIndexPath).row]
+        detailController.locationTitle = "\(LocationModel.locations[(indexPath as NSIndexPath).row])"
+        detailController.urlString = setURL(urlString: location.mediaURL, first: firstName, last: lastName)
+        print("urlString set to \(detailController.urlString)")
         self.navigationController!.pushViewController(detailController, animated: true)
     }
+    
+    //Verify the url and if its no good try verifying a name and using a google search of name...if name no good...then use default
+    func setURL(urlString: String?, first: String?, last: String?) -> String {
+        //let location = LocationModel.locations[(indexPath as NSIndexPath).row]
+        let combined = firstName + "+" + lastName
+        name = combined
+        
+        if verifyUrl(urlString: urlString) {
+            return urlString!
+        } else if verifyName(first: firstName, last: lastName) {
+            return (String(describing: Google.google(name).url))
+        } else {
+            return "https://www.linkedin.com"
+        }
+    }
+    
+    func verifyUrl(urlString: String?) -> Bool {
+        if let urlString = urlString {
+            if let url = URL(string: urlString) {
+                return UIApplication.shared.canOpenURL(url)
+            }
+        }
+        return false
+    }
+    
+    func verifyName(first: String?, last: String?) -> Bool {
+        let letters = CharacterSet.letters
+        if first?.rangeOfCharacter(from: letters) != nil || last?.rangeOfCharacter(from: letters) != nil{
+            return true
+        } else{
+            return false
+        }
+    }
+
+    
+    
 }
