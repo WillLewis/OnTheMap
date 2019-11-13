@@ -40,7 +40,16 @@ class TableViewController: UIViewController {
         }
     }
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DispatchQueue.main.async {
+            self.navigationItem.title = "Approved Links or Google"
+            //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "More", style: .plain, target: self, action: #selector(openTapped))
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addTapped))
+            //self.tableView?.reloadData()
+        }
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,24 +59,22 @@ class TableViewController: UIViewController {
         }
         DispatchQueue.main.async{
             self.tableView?.reloadData()
+            
         }
         
     }
     
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        DispatchQueue.main.async {
-            self.navigationItem.title = "Approved Links or Google"
-            self.tableView?.reloadData()
-        }
-        
-    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "tableToWeb" {
             let detailVC = segue.destination as! WebViewController
             detailVC.location = LocationModel.locations[selectedIndex]
         }
+    }
+    
+    @objc func addTapped(){
+        
     }
 }
 

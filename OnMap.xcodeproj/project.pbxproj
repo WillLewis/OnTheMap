@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		77E38C0E237A6E2500B0FB00 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E38C0D237A6E2500B0FB00 /* Profile.swift */; };
+		77E38C10237B8F3800B0FB00 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E38C0F237B8F3800B0FB00 /* AddLocationViewController.swift */; };
+		77E38C12237B92FD00B0FB00 /* PostLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E38C11237B92FD00B0FB00 /* PostLocation.swift */; };
 		77E4E3E02375090500477CE6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E4E3DF2375090500477CE6 /* AppDelegate.swift */; };
 		77E4E3E22375090500477CE6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E4E3E12375090500477CE6 /* SceneDelegate.swift */; };
 		77E4E3E42375090500477CE6 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E4E3E32375090500477CE6 /* MapViewController.swift */; };
@@ -29,6 +31,8 @@
 
 /* Begin PBXFileReference section */
 		77E38C0D237A6E2500B0FB00 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		77E38C0F237B8F3800B0FB00 /* AddLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
+		77E38C11237B92FD00B0FB00 /* PostLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLocation.swift; sourceTree = "<group>"; };
 		77E4E3DC2375090500477CE6 /* OnMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E4E3DF2375090500477CE6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		77E4E3E12375090500477CE6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +103,7 @@
 				77E4E3FB2375DDFA00477CE6 /* PostSession.swift */,
 				77E38C0D237A6E2500B0FB00 /* Profile.swift */,
 				77E4E3FD2375E0F100477CE6 /* SessionResponse.swift */,
+				77E38C11237B92FD00B0FB00 /* PostLocation.swift */,
 				77E4E3FF2375EE9400477CE6 /* Account.swift */,
 				77E4E4012375EEDD00477CE6 /* Session.swift */,
 				77E4E410237A520000477CE6 /* LocationModel.swift */,
@@ -113,6 +118,7 @@
 			children = (
 				77E4E407237A299A00477CE6 /* LogViewController.swift */,
 				77E4E3E32375090500477CE6 /* MapViewController.swift */,
+				77E38C0F237B8F3800B0FB00 /* AddLocationViewController.swift */,
 				77E4E3E52375090500477CE6 /* TableViewController.swift */,
 				77E4E412237A579F00477CE6 /* WebViewController.swift */,
 			);
@@ -190,6 +196,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77E38C12237B92FD00B0FB00 /* PostLocation.swift in Sources */,
 				77E4E3F6237514FD00477CE6 /* UdacityClient.swift in Sources */,
 				77E4E3FA2375276700477CE6 /* LocationResults.swift in Sources */,
 				77E4E408237A299A00477CE6 /* LogViewController.swift in Sources */,
@@ -201,6 +208,7 @@
 				77E4E3FE2375E0F100477CE6 /* SessionResponse.swift in Sources */,
 				77E4E4022375EEDD00477CE6 /* Session.swift in Sources */,
 				77E4E3E02375090500477CE6 /* AppDelegate.swift in Sources */,
+				77E38C10237B8F3800B0FB00 /* AddLocationViewController.swift in Sources */,
 				77E4E411237A520000477CE6 /* LocationModel.swift in Sources */,
 				77E4E413237A579F00477CE6 /* WebViewController.swift in Sources */,
 				77E4E3FC2375DDFA00477CE6 /* PostSession.swift in Sources */,

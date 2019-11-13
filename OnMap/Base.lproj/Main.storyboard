@@ -122,7 +122,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I2N-w1-vmx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4562.3188405797109" y="47.544642857142854"/>
+            <point key="canvasLocation" x="4416" y="329"/>
         </scene>
         <!--Log View Controller-->
         <scene sceneID="4hy-9k-6Xx">
@@ -230,6 +230,68 @@
             </objects>
             <point key="canvasLocation" x="0.0" y="0.0"/>
         </scene>
+        <!--Add Location View Controller-->
+        <scene sceneID="HX6-Cq-FQE">
+            <objects>
+                <viewController storyboardIdentifier="AddLocation" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pC9-7e-pI6" customClass="AddLocationViewController" customModule="OnMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Q4Z-zE-lN1">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="3eK-4u-oZO">
+                                <rect key="frame" x="52" y="294" width="310" height="116"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter a Location" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H6P-lI-mOG">
+                                        <rect key="frame" x="0.0" y="0.0" width="310" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter a website" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fqQ-yG-0tc">
+                                        <rect key="frame" x="0.0" y="40" width="310" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="310" id="HmW-V3-sde"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cee-yA-X31">
+                                        <rect key="frame" x="0.0" y="80" width="310" height="36"/>
+                                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="FIND LOCATION">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="loginTap:" destination="pgN-DJ-Efz" eventType="touchUpInside" id="P9s-8V-xi1"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_world" translatesAutoresizingMaskIntoConstraints="NO" id="efO-bS-9WB">
+                                <rect key="frame" x="167" y="150" width="80" height="67"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="efO-bS-9WB" firstAttribute="centerX" secondItem="3eK-4u-oZO" secondAttribute="centerX" id="10M-tg-v7U"/>
+                            <constraint firstItem="3eK-4u-oZO" firstAttribute="top" secondItem="asm-Ci-zSZ" secondAttribute="top" constant="250" id="7O6-6X-vim"/>
+                            <constraint firstItem="3eK-4u-oZO" firstAttribute="top" secondItem="efO-bS-9WB" secondAttribute="bottom" constant="77" id="Q0r-yr-pwW"/>
+                            <constraint firstItem="efO-bS-9WB" firstAttribute="leading" secondItem="asm-Ci-zSZ" secondAttribute="leading" constant="167" id="jtk-uf-69e"/>
+                            <constraint firstItem="3eK-4u-oZO" firstAttribute="centerX" secondItem="asm-Ci-zSZ" secondAttribute="centerX" id="yc8-Uo-sbz"/>
+                            <constraint firstItem="3eK-4u-oZO" firstAttribute="centerX" secondItem="asm-Ci-zSZ" secondAttribute="centerX" id="z2U-s0-Yew"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="asm-Ci-zSZ"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7oi-Md-Qe2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3504" y="-361"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="Teh-s4-GGr">
             <objects>
@@ -246,13 +308,13 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Q9-FN-J74" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3652.1739130434785" y="47.544642857142854"/>
+            <point key="canvasLocation" x="3583" y="360"/>
         </scene>
         <!--First-->
         <scene sceneID="orH-OV-AO6">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sao-Rr-6Gr" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
+                    <tabBarItem key="tabBarItem" title="First" image="icon_mapview-deselected" selectedImage="icon_mapview-selected" id="acW-dT-cKf"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="2Ct-Vn-CgA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
@@ -271,7 +333,7 @@
         <scene sceneID="x2L-iv-xYA">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4e7-1e-ECZ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Second" image="second" id="cPa-gy-q4n"/>
+                    <tabBarItem key="tabBarItem" title="Second" image="icon_listview-deselected" selectedImage="icon_listview-selected" id="cPa-gy-q4n"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="nGy-vr-SVE">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
@@ -288,9 +350,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="first" width="30" height="30"/>
+        <image name="icon_listview-deselected" width="75" height="50"/>
+        <image name="icon_listview-selected" width="75" height="50"/>
+        <image name="icon_mapview-deselected" width="75" height="50"/>
+        <image name="icon_mapview-selected" width="75" height="50"/>
+        <image name="icon_world" width="52" height="67"/>
         <image name="logo-u" width="62" height="62"/>
-        <image name="second" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="wge-et-XJO"/>
