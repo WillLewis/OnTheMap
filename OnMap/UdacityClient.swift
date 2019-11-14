@@ -7,20 +7,29 @@
 //
 
 import Foundation
+import CoreLocation
 
 class UdacityClient {
     
     
     struct Auth {
-        //static var udacity = [PostSession.username: PostSession.password]()
-        static var userKey = ""
-        static var pswdKey = ""
-        static var key = ""
+        
+        static var key = " "
         static var sessionId = ""
+        static var firstName = " "
+        static var lastName = " "
+        static var objectId = " "
+        
+    }
+    
+    struct LocationDegrees {
+        static var lat: CLLocationDegrees = 0.0
+        static var long: CLLocationDegrees = 0.0
         
     }
     //getting location "https://onthemap-api.udacity.com/v1/StudentLocation?order=-updatedAt"
     //posting location "https://onthemap-api.udacity.com/v1/StudentLocation"
+    //getting data "https://onthemap-api.udacity.com/v1/users/<user_id.>"
     //putting locatin "https://onthemap-api.udacity.com/v1/StudentLocation/8ZExGR5uX8"
     //deleting session "https://onthemap-api.udacity.com/v1/session"
     //posting session "https://onthemap-api.udacity.com/v1/session"
@@ -30,11 +39,13 @@ class UdacityClient {
         static let limit100 = "limit=100"
         static let parameter = "?"
         static let reverseOrder = "order=-updatedAt"
+        static let apiKey = "\(UdacityClient.Auth.key)"
         
         case createOrDeleteSession
         case getStudentLocations
         case addStudentLocation
         case updateStudentLocation(String)
+        case getUserData
         
         var stringValue: String {
             switch self {
@@ -44,8 +55,10 @@ class UdacityClient {
                 return Endpoints.base + "/StudentLocation" + Endpoints.parameter + Endpoints.reverseOrder + Endpoints.parameter + Endpoints.limit100
             case .addStudentLocation:
                 return Endpoints.base + "/StudentLocation"
-            case .updateStudentLocation(let studentKey):
-                return Endpoints.base + "/StudentLocation\(studentKey)"
+            case .updateStudentLocation(let objectId):
+                return Endpoints.base + "/StudentLocation/\(objectId)"
+            case .getUserData:
+                return Endpoints.base + "/users/" + Endpoints.apiKey
             }
         }
         var url: URL{
@@ -78,8 +91,37 @@ class UdacityClient {
         task.resume()
     }
     
-    class func addStudentLocation (location: String, website: String, completion: @escaping (Bool, Error?) -> Void){
-        let body = PostLocation(uniqueKey: uniqueKey, firstName: firstName, lastName: lastName, mapString: mapString, mediaURL: mediaURL, latitude: latitude, longitude: longitude)
+    class func getUserData (completion: @escaping (Bool, Error?) -> Void ) {
+        let task = URLSession.shared.dataTask(with: Endpoints.getUserData.url) { data, response, error in
+            guard let data = data else {
+                completion(false, error)
+                print("problem with getUserData URL")
+                return
+            }
+            print("URL session for getUserData worked")
+            let decoder = JSONDecoder()
+            do {
+                let response = try decoder.decode(UserDataResponse.self, from: data)
+                DispatchQueue.main.async {
+                    Auth.firstName = response.firstName ?? "no firstName"
+                    Auth.lastName = response.lastName ?? "no lastName"
+                    completion(true, nil)
+                }
+                completion(true, nil)
+            } catch let error as NSError { /* cast error to `NSError` */
+               print(error.domain)
+               print(error.code)
+               print(error.userInfo)
+            }catch {
+                completion(false, error)
+                print(error)
+            }
+        }
+        task.resume()
+    }
+    
+    class func addStudentLocation (mapString: String?, mediaURL: String?, completion: @escaping (Bool, Error?) -> Void){
+        let body = PostLocation(uniqueKey: Auth.key, firstName: Auth.firstName, lastName: Auth.lastName, mapString: mapString, mediaURL: mediaURL, latitude: Float(self.LocationDegrees.lat), longitude: Float(self.LocationDegrees.long))
         
         var request = URLRequest(url: Endpoints.addStudentLocation.url)
         request.httpMethod = "POST"
@@ -89,7 +131,7 @@ class UdacityClient {
        let task = URLSession.shared.dataTask(with: request) {data, response, error in
             guard let data = data else {
                 completion(false, error)
-               print("URL Session problem")
+               print("addStudentLocation URL Session problem")
                 return
                  
             }
@@ -98,16 +140,14 @@ class UdacityClient {
                 let range = 5..<data.count
                 let dataSubset = data.subdata(in: range) //subset of data
                 
-                let response = try decoder.decode(SessionResponse.self, from: dataSubset)
+                let response = try decoder.decode(PostLocationResponse.self, from: dataSubset)
                 DispatchQueue.main.async {
-                    Auth.key = response.account?.key ?? "no account"
-                    Auth.sessionId = response.session?.id ?? "no sessionid"
+                    Auth.objectId = response.objectId
                     completion(true, nil)
                 }
                 
-                print("key is \(Auth.key)")
-                print("sessionId is \(Auth.sessionId)")
-                print("session is all good")
+                print("objectId is \(Auth.objectId)")
+                print("addStudentLocation is all good")
             }catch {
                 print(error)
                 completion(false, error)
@@ -141,6 +181,7 @@ class UdacityClient {
             let response = try decoder.decode(SessionResponse.self, from: dataSubset)
             DispatchQueue.main.async {
                 Auth.key = response.account?.key ?? "no account"
+                
                 Auth.sessionId = response.session?.id ?? "no sessionid"
                 completion(true, nil)
             }
@@ -150,12 +191,26 @@ class UdacityClient {
             print("session is all good")
         }catch {
             print(error)
-            completion(false, error)
+            completion(false, error) 
         }
         }
         task.resume()
     }
     
+    class func getCoordinate( addressString: String, completion: @escaping (Bool, Error) -> Void) {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(addressString, completionHandler: {
+            (placemarks: [CLPlacemark]?, error: Error) in
+            if let placemark = placemarks?[0] {
+                self.LocationDegrees.lat = placemark.location!.coordinate.latitude
+                self.LocationDegrees.long = placemark.location!.coordinate.longitude
+                completion(true, error)
+            } else {
+                completion(false, error)
+                
+            }
+            } as! CLGeocodeCompletionHandler)
+    }
     
     
     
