@@ -49,11 +49,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         // Do any additional setup after loading the view.
     }
     
-    @objc func addTapped(for segue: UIStoryboardSegue, _ sender: UIBarButtonItem){
-           if segue.identifier == "mapToAdd" {
-               let detailVC = segue.destination as! AddLocationViewController
-               detailVC.title = "Add Location"
-           }
+    @objc func addTapped(){
+        let detailVC = storyboard!.instantiateViewController(identifier: "AddLocation") as! AddLocationViewController
+        detailVC.title = "Add Location"
+        navigationController?.pushViewController(detailVC, animated: true)
     }
     
     @objc func reLoad(){
