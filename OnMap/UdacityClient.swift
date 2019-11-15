@@ -86,7 +86,7 @@ class UdacityClient {
            task.resume()
        }
     
-    class func getStudentLocations ( completion: @escaping ([Location], Error?) -> Void ) {
+    class func getStudentLocations ( completion: @escaping ([Location]?, Error?) -> Void ) {
         let task = URLSession.shared.dataTask(with: URL(string:"https://onthemap-api.udacity.com/v1/StudentLocation?order=-updatedAt?limit=100")!) { data, response, error in
             guard let data = data else {
                 completion ([], error)

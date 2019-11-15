@@ -15,30 +15,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="First View" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="KQZ-1w-vlD">
-                                <rect key="frame" x="131.5" y="399.5" width="151" height="43"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loaded by FirstViewController" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5M-7J-77L">
-                                <rect key="frame" x="110" y="450.5" width="194.5" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="D67-Rr-x25">
+                                <rect key="frame" x="0.0" y="56" width="414" height="703"/>
+                                <connections>
+                                    <outlet property="delegate" destination="tsR-hK-woN" id="4hf-6u-ii9"/>
+                                </connections>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="KQZ-1w-vlD" secondAttribute="centerX" id="6BV-lF-sBN"/>
-                            <constraint firstItem="A5M-7J-77L" firstAttribute="top" secondItem="KQZ-1w-vlD" secondAttribute="bottom" constant="8" symbolic="YES" id="cfb-er-3JN"/>
-                            <constraint firstItem="A5M-7J-77L" firstAttribute="centerX" secondItem="KQZ-1w-vlD" secondAttribute="centerX" id="e1l-AV-tCB"/>
-                            <constraint firstAttribute="centerY" secondItem="KQZ-1w-vlD" secondAttribute="centerY" id="exm-UA-ej4"/>
+                            <constraint firstItem="D67-Rr-x25" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="1Ac-KE-RDm"/>
+                            <constraint firstItem="D67-Rr-x25" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" id="51P-Gt-dt2"/>
+                            <constraint firstItem="D67-Rr-x25" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" id="Oum-b8-YIj"/>
+                            <constraint firstItem="D67-Rr-x25" firstAttribute="bottom" secondItem="PQr-Ze-W5v" secondAttribute="bottom" id="P7q-Wm-Zh1"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
                     </view>
                     <navigationItem key="navigationItem" id="7Mk-8X-yNz"/>
                     <connections>
+                        <outlet property="mapView" destination="D67-Rr-x25" id="nRh-QC-M5t"/>
                         <segue destination="zs9-Ra-gaS" kind="showDetail" identifier="mapToWeb" id="fOr-3m-bO0"/>
+                        <segue destination="EvE-rN-L4Q" kind="showDetail" identifier="mapToAdd" id="nPW-ps-qJg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
@@ -102,7 +99,7 @@
                     <connections>
                         <outlet property="tableView" destination="mAB-uV-zaC" id="oGd-bd-ZUT"/>
                         <segue destination="zs9-Ra-gaS" kind="showDetail" identifier="tableToWeb" id="wge-et-XJO"/>
-                        <segue destination="pC9-7e-pI6" kind="showDetail" identifier="tableToAdd" id="c6H-SG-UFG"/>
+                        <segue destination="EvE-rN-L4Q" kind="showDetail" identifier="tableToAdd" id="c6H-SG-UFG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
@@ -239,7 +236,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="3eK-4u-oZO">
-                                <rect key="frame" x="52" y="250" width="310" height="116"/>
+                                <rect key="frame" x="52" y="306" width="310" height="116"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter a Location" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H6P-lI-mOG">
                                         <rect key="frame" x="0.0" y="0.0" width="310" height="34"/>
@@ -273,7 +270,7 @@
                                 </subviews>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_world" translatesAutoresizingMaskIntoConstraints="NO" id="efO-bS-9WB">
-                                <rect key="frame" x="167" y="106" width="80" height="67"/>
+                                <rect key="frame" x="167" y="162" width="80" height="67"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -287,10 +284,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="asm-Ci-zSZ"/>
                     </view>
+                    <navigationItem key="navigationItem" id="mTY-08-wX4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7oi-Md-Qe2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3504" y="-361"/>
+            <point key="canvasLocation" x="4413.04347826087" y="-361.60714285714283"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Teh-s4-GGr">
@@ -348,6 +346,24 @@
             </objects>
             <point key="canvasLocation" x="749.27536231884062" y="359.59821428571428"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="hPM-ej-9GS">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EvE-rN-L4Q" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="A1l-x5-Zbx">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="pC9-7e-pI6" kind="relationship" relationship="rootViewController" id="MMx-r2-d1t"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aJK-5O-Obj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3502.898550724638" y="-361.60714285714283"/>
+        </scene>
     </scenes>
     <resources>
         <image name="icon_listview-deselected" width="75" height="50"/>
@@ -358,6 +374,7 @@
         <image name="logo-u" width="62" height="62"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="wge-et-XJO"/>
+        <segue reference="nPW-ps-qJg"/>
+        <segue reference="fOr-3m-bO0"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -42,31 +42,34 @@ class TableViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UdacityClient.getStudentLocations() { locations, error in
-            LocationModel.locations = locations}
-        DispatchQueue.main.async {
-            self.navigationItem.title = "Approved Links or Google"
-            //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "More", style: .plain, target: self, action: #selector(openTapped))
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addTapped))
-            self.tableView?.reloadData()
+        UdacityClient.getStudentLocations() {(data, error) in
+            guard data != nil else {
+            return
+            }
+            DispatchQueue.main.async {
+                self.navigationItem.title = "Approved Links or Google"
+                //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "More", style: .plain, target: self, action: #selector(openTapped))
+                let add  = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addTapped))
+                let reload = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(self.reLoad))
+                self.navigationItem.rightBarButtonItems = [add, reload]
+                self.tableView?.reloadData()
+            }
         }
         
     }
-    /*
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        /*
         UdacityClient.getStudentLocations() { locations, error in
                 LocationModel.locations = locations
        // print(locations)
         }
         DispatchQueue.main.async{
             self.tableView?.reloadData()
-            
         }
-        
-    }*/
-    
-
+     */
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "tableToWeb" {
@@ -75,13 +78,15 @@ class TableViewController: UIViewController {
         }
     }
     
-    @objc func addTapped(for segue: UIStoryboardSegue, sender: Any?){
-        if segue.identifier == "tableToAdd" {
-            let detailVC = segue.destination as! AddLocationViewController
-            detailVC.title = "Add Location"
-        }
-        
-        
+    @objc func addTapped(){
+        let detailVC = storyboard!.instantiateViewController(identifier: "AddLocation") as! AddLocationViewController
+        detailVC.title = "Add Location"
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    
+    @objc func reLoad(){
+        self.tableView?.reloadData()
     }
 }
 
@@ -108,7 +113,6 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
        if let detailTextLabel = cell.detailTextLabel {
         detailTextLabel.text =  setURL(urlString: location.mediaURL, first: first, last: last)
         }
-        
         return cell
     }
     
@@ -156,5 +160,5 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     
-    
+        
 }
