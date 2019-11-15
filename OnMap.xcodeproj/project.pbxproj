@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		77A8B269237E0B7B00675F36 /* UserDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A8B268237E0B7B00675F36 /* UserDataResponse.swift */; };
 		77A8B26B237E13A600675F36 /* PostLocationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A8B26A237E13A600675F36 /* PostLocationResponse.swift */; };
+		77A8B26D237E286600675F36 /* LocationDegrees.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A8B26C237E286600675F36 /* LocationDegrees.swift */; };
 		77E38C0E237A6E2500B0FB00 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E38C0D237A6E2500B0FB00 /* Profile.swift */; };
 		77E38C10237B8F3800B0FB00 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E38C0F237B8F3800B0FB00 /* AddLocationViewController.swift */; };
 		77E38C12237B92FD00B0FB00 /* PostLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E38C11237B92FD00B0FB00 /* PostLocation.swift */; };
@@ -34,6 +35,7 @@
 /* Begin PBXFileReference section */
 		77A8B268237E0B7B00675F36 /* UserDataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataResponse.swift; sourceTree = "<group>"; };
 		77A8B26A237E13A600675F36 /* PostLocationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLocationResponse.swift; sourceTree = "<group>"; };
+		77A8B26C237E286600675F36 /* LocationDegrees.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDegrees.swift; sourceTree = "<group>"; };
 		77E38C0D237A6E2500B0FB00 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		77E38C0F237B8F3800B0FB00 /* AddLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		77E38C11237B92FD00B0FB00 /* PostLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLocation.swift; sourceTree = "<group>"; };
@@ -106,11 +108,12 @@
 			children = (
 				77E4E3FB2375DDFA00477CE6 /* PostSession.swift */,
 				77E38C0D237A6E2500B0FB00 /* Profile.swift */,
-				77E4E3FD2375E0F100477CE6 /* SessionResponse.swift */,
-				77A8B268237E0B7B00675F36 /* UserDataResponse.swift */,
-				77E38C11237B92FD00B0FB00 /* PostLocation.swift */,
 				77E4E3FF2375EE9400477CE6 /* Account.swift */,
 				77E4E4012375EEDD00477CE6 /* Session.swift */,
+				77E4E3FD2375E0F100477CE6 /* SessionResponse.swift */,
+				77A8B26C237E286600675F36 /* LocationDegrees.swift */,
+				77E38C11237B92FD00B0FB00 /* PostLocation.swift */,
+				77A8B268237E0B7B00675F36 /* UserDataResponse.swift */,
 				77E4E410237A520000477CE6 /* LocationModel.swift */,
 				77A8B26A237E13A600675F36 /* PostLocationResponse.swift */,
 				77E4E3F92375276700477CE6 /* LocationResults.swift */,
@@ -210,6 +213,7 @@
 				77E4E3E62375090500477CE6 /* TableViewController.swift in Sources */,
 				77E4E3E42375090500477CE6 /* MapViewController.swift in Sources */,
 				77E38C0E237A6E2500B0FB00 /* Profile.swift in Sources */,
+				77A8B26D237E286600675F36 /* LocationDegrees.swift in Sources */,
 				77E4E40C237A4BD200477CE6 /* Location.swift in Sources */,
 				77E4E4002375EE9400477CE6 /* Account.swift in Sources */,
 				77A8B269237E0B7B00675F36 /* UserDataResponse.swift in Sources */,

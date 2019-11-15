@@ -27,26 +27,27 @@ class LogViewController: UIViewController {
     }
     
     @IBAction func loginTap(_ sender: Any) {
-        setLogginIn(true)
-        UdacityClient.createSession(username: emailTextField.text ?? "", password: passwordTextField.text ?? "", completion: handleSessionResponse(success:error:))
+            self.setLogginIn(true)
+            UdacityClient.createSession(username: self.emailTextField.text ?? "", password: self.passwordTextField.text ?? "", completion: self.handleSessionResponse(success:error:))
+    
     }
     
     func handleSessionResponse( success: Bool, error: Error?){
-        setLogginIn(false)
-       
-        DispatchQueue.main.async {
             if success{
+                self.setLogginIn(false)
                 self.performSegue(withIdentifier: "completeLogin", sender: nil)
             } else {
                 self.showLoginFailure(message: error?.localizedDescription ?? "")
             }
-        }
     }
     
+    
     func showLoginFailure(message: String){
-        let alertVC = UIAlertController(title: "UhOh Login Failed", message: message, preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        show(alertVC, sender: nil)
+        DispatchQueue.main.async{
+            let alertVC = UIAlertController(title: "UhOh Login Failed", message: message, preferredStyle: .alert)
+            alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.show(alertVC, sender: nil)
+        }
     
     }
     

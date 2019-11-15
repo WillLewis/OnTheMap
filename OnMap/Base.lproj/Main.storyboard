@@ -100,13 +100,14 @@
                     </view>
                     <navigationItem key="navigationItem" id="buU-9Q-iRh"/>
                     <connections>
-                        <outlet property="tableView" destination="mAB-uV-zaC" id="jSv-0o-LyH"/>
+                        <outlet property="tableView" destination="mAB-uV-zaC" id="oGd-bd-ZUT"/>
                         <segue destination="zs9-Ra-gaS" kind="showDetail" identifier="tableToWeb" id="wge-et-XJO"/>
+                        <segue destination="pC9-7e-pI6" kind="showDetail" identifier="tableToAdd" id="c6H-SG-UFG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1659.4202898550725" y="359.59821428571428"/>
+            <point key="canvasLocation" x="1584" y="437"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="rH4-Am-bzl">
@@ -138,7 +139,7 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Email" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xbP-W4-LFF">
                                         <rect key="frame" x="0.0" y="0.0" width="310" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Password" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pIr-Pu-RXw">
                                         <rect key="frame" x="0.0" y="40" width="310" height="34"/>
@@ -187,14 +188,13 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="vlK-GX-cWu" firstAttribute="top" secondItem="aUd-ym-aDa" secondAttribute="bottom" constant="70" id="HjY-vM-9dF"/>
+                            <constraint firstItem="6Nj-b0-xOZ" firstAttribute="top" secondItem="n5t-wI-kam" secondAttribute="bottom" constant="36" id="Ju5-cr-zDd"/>
                             <constraint firstItem="n5t-wI-kam" firstAttribute="centerX" secondItem="xXh-GB-ADz" secondAttribute="centerX" id="KNV-Wj-KxB"/>
-                            <constraint firstItem="6Nj-b0-xOZ" firstAttribute="top" secondItem="n5t-wI-kam" secondAttribute="bottom" constant="36" id="PI0-xK-8I3"/>
                             <constraint firstItem="aUd-ym-aDa" firstAttribute="top" secondItem="xXh-GB-ADz" secondAttribute="top" constant="113" id="Rd6-0u-rpR"/>
                             <constraint firstItem="vlK-GX-cWu" firstAttribute="centerX" secondItem="n5t-wI-kam" secondAttribute="centerX" id="cSf-Uu-ex8"/>
+                            <constraint firstItem="n5t-wI-kam" firstAttribute="centerY" secondItem="kbr-gb-Wgo" secondAttribute="centerY" id="dnE-Y1-BwV"/>
                             <constraint firstItem="aUd-ym-aDa" firstAttribute="centerX" secondItem="xXh-GB-ADz" secondAttribute="centerX" id="jdk-Ht-XqA"/>
                             <constraint firstItem="vlK-GX-cWu" firstAttribute="leading" secondItem="xXh-GB-ADz" secondAttribute="leading" constant="52" id="jgd-L7-Y31"/>
-                            <constraint firstItem="vlK-GX-cWu" firstAttribute="top" secondItem="kbr-gb-Wgo" secondAttribute="top" constant="289" id="lUt-j8-OZp"/>
                             <constraint firstItem="6Nj-b0-xOZ" firstAttribute="centerX" secondItem="n5t-wI-kam" secondAttribute="centerX" id="xb2-RI-AcB"/>
                             <constraint firstItem="n5t-wI-kam" firstAttribute="top" secondItem="vlK-GX-cWu" secondAttribute="bottom" constant="28" id="y4q-ys-0C4"/>
                         </constraints>
@@ -235,11 +235,11 @@
             <objects>
                 <viewController storyboardIdentifier="AddLocation" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pC9-7e-pI6" customClass="AddLocationViewController" customModule="OnMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Q4Z-zE-lN1">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="3eK-4u-oZO">
-                                <rect key="frame" x="52" y="294" width="310" height="116"/>
+                                <rect key="frame" x="52" y="250" width="310" height="116"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter a Location" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H6P-lI-mOG">
                                         <rect key="frame" x="0.0" y="0.0" width="310" height="34"/>
@@ -273,7 +273,7 @@
                                 </subviews>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_world" translatesAutoresizingMaskIntoConstraints="NO" id="efO-bS-9WB">
-                                <rect key="frame" x="167" y="150" width="80" height="67"/>
+                                <rect key="frame" x="167" y="106" width="80" height="67"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

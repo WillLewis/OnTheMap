@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CoreFoundation
 
 struct SessionResponse: Codable {
     let account: Account?

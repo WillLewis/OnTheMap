@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CoreFoundation
 
 struct Account: Codable {
     let registered: Bool

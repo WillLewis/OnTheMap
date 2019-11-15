@@ -14,9 +14,9 @@ class TableViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var selectedIndex = 0
-    var firstName = ""
-    var lastName = ""
-    lazy var name = firstName + " " + lastName
+    var first = ""
+    var last = ""
+    lazy var name = first + " " + last
   
     //lazy var name: String = firstName + "+" + lastName  //has to be lazy bc its a computed variable that depends on another instance property
     
@@ -27,7 +27,7 @@ class TableViewController: UIViewController {
         case google(String)
         case linkedin(String)
         
-        var stringValue: String {
+        var stringsValue: String {
             switch self {
             case .google(let name):
                 return Google.base + "\(name)"
@@ -36,21 +36,23 @@ class TableViewController: UIViewController {
             }
         }
         var url: URL{
-            return URL(string: stringValue) ?? URL(string: "https://udacity.com")!
+            return URL(string: stringsValue) ?? URL(string: "https://udacity.com")!
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        UdacityClient.getStudentLocations() { locations, error in
+            LocationModel.locations = locations}
         DispatchQueue.main.async {
             self.navigationItem.title = "Approved Links or Google"
             //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "More", style: .plain, target: self, action: #selector(openTapped))
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addTapped))
-            //self.tableView?.reloadData()
+            self.tableView?.reloadData()
         }
         
     }
-    
+    /*
     override func viewDidLoad() {
         super.viewDidLoad()
         UdacityClient.getStudentLocations() { locations, error in
@@ -62,7 +64,7 @@ class TableViewController: UIViewController {
             
         }
         
-    }
+    }*/
     
 
     
@@ -73,7 +75,12 @@ class TableViewController: UIViewController {
         }
     }
     
-    @objc func addTapped(){
+    @objc func addTapped(for segue: UIStoryboardSegue, sender: Any?){
+        if segue.identifier == "tableToAdd" {
+            let detailVC = segue.destination as! AddLocationViewController
+            detailVC.title = "Add Location"
+        }
+        
         
     }
 }
@@ -92,15 +99,10 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
         
         let location = LocationModel.locations[indexPath.row]
         
-        let first = (location.firstName ?? "")
-        let last = (location.lastName ?? "")
-    
-        
-        firstName = (location.firstName ?? "")
-        lastName = (location.lastName ?? "")
-        //let combined = firstName + "+" + lastName
-        //name = combined
-        cell.textLabel?.text = firstName + " " + lastName
+        first = (location.firstName ?? "")
+        last = (location.lastName ?? "")
+       
+        cell.textLabel?.text = first + " " + last
         cell.imageView?.image = UIImage(named: "icon_pin")
         
        if let detailTextLabel = cell.detailTextLabel {
@@ -116,20 +118,19 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
         
         let detailController = self.storyboard!.instantiateViewController(withIdentifier: "WebViewController") as! WebViewController
         detailController.locationTitle = "\(LocationModel.locations[(indexPath as NSIndexPath).row])"
-        detailController.urlString = setURL(urlString: location.mediaURL, first: firstName, last: lastName)
+        detailController.urlString = setURL(urlString: location.mediaURL, first: first, last: last)
         print("urlString set to \(detailController.urlString)")
         self.navigationController!.pushViewController(detailController, animated: true)
     }
     
     //Verify the url and if its no good try verifying a name and using a google search of name...if name no good...then use default
     func setURL(urlString: String?, first: String?, last: String?) -> String {
-        //let location = LocationModel.locations[(indexPath as NSIndexPath).row]
-        let combined = firstName + "+" + lastName
-        name = combined
+        let name = (first ?? "") + "+" + (last ?? "")
+        
         
         if verifyUrl(urlString: urlString) {
             return urlString!
-        } else if verifyName(first: firstName, last: lastName) {
+        } else if verifyName(first: self.first, last: self.last) {
             return (String(describing: Google.google(name).url))
         } else {
             return "https://www.linkedin.com"

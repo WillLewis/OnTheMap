@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CoreFoundation
 
 struct Session: Codable {
     let id: String
