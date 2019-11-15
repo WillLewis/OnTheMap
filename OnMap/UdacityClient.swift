@@ -178,19 +178,20 @@ class UdacityClient {
     
    
     
-    class func getCoordinate( addressString: String, completion: @escaping (Bool, Error) -> Void) {
+    class func getCoordinate( addressString: String, completion: @escaping (Bool, Error?) -> Void) {
         let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(addressString, completionHandler: {
-            (placemarks: [CLPlacemark]?, error: Error) in
-            if let placemark = placemarks?[0] {
-                LocationDegrees.lat = placemark.location!.coordinate.latitude
-                LocationDegrees.long = placemark.location!.coordinate.longitude
-                completion(true, error)
-            } else {
-                completion(false, error)
-                
+        geocoder.geocodeAddressString(addressString){ (placemarks, error) in
+            if error == nil {
+                if let placemark = placemarks?[0] {
+                    let location = placemark.location!
+                    LocationDegrees.lat = location.coordinate.latitude
+                    LocationDegrees.long = location.coordinate.longitude
+                    completion(true, error)
+                    return
+                    }
             }
-            } as! CLGeocodeCompletionHandler)
+                completion(false, error)
+            }
     }
     
     
