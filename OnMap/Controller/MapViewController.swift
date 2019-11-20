@@ -74,7 +74,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         UdacityClient.deleteSession(completion: handleLogOutResponse(success:error:))
         
     }
-    
     func handleLogOutResponse (success: Bool, error: Error?) {
         if success {
             print("logged out")

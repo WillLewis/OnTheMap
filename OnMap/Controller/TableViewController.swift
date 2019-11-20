@@ -82,21 +82,20 @@ class TableViewController: UIViewController {
             detailVC.location = LocationModel.locations[selectedIndex]
         }
     }
+    
     @objc func exitOnMap (){
-           UdacityClient.deleteSession(completion: handleLogOutResponse(success:error:))
-           
-       }
-       
-       func handleLogOutResponse (success: Bool, error: Error?) {
-           if success {
-              let detailVC = storyboard!.instantiateViewController(identifier: "Login") as! LogViewController
-               //detailVC.title = "Login"
-               navigationController?.pushViewController(detailVC, animated: true)
-               
-           } else {
-               showLogoutFailure(message: error?.localizedDescription ?? "")
-           }
-       }
+        let detailVC = storyboard!.instantiateViewController(identifier: "Login") as! LogViewController
+        navigationController?.pushViewController(detailVC, animated: true)
+        UdacityClient.deleteSession(completion: handleLogOutResponse(success:error:))
+        
+    }
+    func handleLogOutResponse (success: Bool, error: Error?) {
+        if success {
+            print("logged out")
+        } else {
+            showLogoutFailure(message: error?.localizedDescription ?? "")
+        }
+    }
     
     @objc func addTapped(){
         let detailVC = storyboard!.instantiateViewController(identifier: "AddLocation") as! AddLocationViewController
