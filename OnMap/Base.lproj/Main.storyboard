@@ -125,7 +125,7 @@
         <!--Log View Controller-->
         <scene sceneID="4hy-9k-6Xx">
             <objects>
-                <viewController id="pgN-DJ-Efz" customClass="LogViewController" customModule="OnMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Login" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pgN-DJ-Efz" customClass="LogViewController" customModule="OnMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kbr-gb-Wgo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

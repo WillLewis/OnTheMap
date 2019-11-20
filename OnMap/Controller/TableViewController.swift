@@ -52,6 +52,10 @@ class TableViewController: UIViewController {
                 let add  = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addTapped))
                 let reload = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(self.reLoad))
                 self.navigationItem.rightBarButtonItems = [add, reload]
+                
+                let exit = UIBarButtonItem(title: "LOGOUT" , style: .plain, target: self, action: #selector(self.exitOnMap))
+                self.navigationItem.leftBarButtonItem = exit
+                
                 self.tableView?.reloadData()
             }
         }
@@ -78,6 +82,21 @@ class TableViewController: UIViewController {
             detailVC.location = LocationModel.locations[selectedIndex]
         }
     }
+    @objc func exitOnMap (){
+           UdacityClient.deleteSession(completion: handleLogOutResponse(success:error:))
+           
+       }
+       
+       func handleLogOutResponse (success: Bool, error: Error?) {
+           if success {
+              let detailVC = storyboard!.instantiateViewController(identifier: "Login") as! LogViewController
+               //detailVC.title = "Login"
+               navigationController?.pushViewController(detailVC, animated: true)
+               
+           } else {
+               showLogoutFailure(message: error?.localizedDescription ?? "")
+           }
+       }
     
     @objc func addTapped(){
         let detailVC = storyboard!.instantiateViewController(identifier: "AddLocation") as! AddLocationViewController
@@ -161,7 +180,15 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
             return false
         }
     }
-
+    
+    func showLogoutFailure(message: String){
+        DispatchQueue.main.async{
+            let alertVC = UIAlertController(title: "LogOut Failed", message: message, preferredStyle: .alert)
+            alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.show(alertVC, sender: nil)
+        }
+    
+    }
     
         
 }

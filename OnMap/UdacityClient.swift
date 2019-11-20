@@ -85,6 +85,32 @@ class UdacityClient {
            
            task.resume()
        }
+    class func deleteSession (completion: @escaping (Bool, Error? ) -> Void ) {
+        var request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/session")!)
+            request.httpMethod = "DELETE"
+        var xsrfCookie: HTTPCookie? = nil
+        let sharedCookieStorage = HTTPCookieStorage.shared
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        }
+        if let xsrfCookie = xsrfCookie {
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                completion( false, error)
+                print("delete session URL problem")
+                return
+            }
+            
+        let range = 5..<data.count
+        let dataSubset = data.subdata(in: range) /* subset response data! */
+            
+        print(String(data: dataSubset, encoding: .utf8)!)
+        }
+        task.resume()
+    }
     
     class func getStudentLocations ( completion: @escaping ([Location]?, Error?) -> Void ) {
         let task = URLSession.shared.dataTask(with: URL(string:"https://onthemap-api.udacity.com/v1/StudentLocation?limit=500?order=-updatedAt")!) { data, response, error in
@@ -141,12 +167,14 @@ class UdacityClient {
     
     class func addStudentLocation (mapString: String?, mediaURL: String?, completion: @escaping (Bool, Error?) -> Void){
         let body = PostLocation(uniqueKey: Auth.sessionKey, firstName: Auth.firstName, lastName: Auth.lastName, mapString: mapString, mediaURL: mediaURL, latitude: Float(LocationDegrees.lat), longitude: Float(LocationDegrees.long))
+        /*
         print("The First Name is \(Auth.firstName)")
         print("The Last Name is \(Auth.lastName)")
         print("The map string is \(String(describing: mapString))")
         print("The media url is \(String(describing: mediaURL))")
         print("The longitude  is \(LocationDegrees.long)")
         print("The latitude  is \(LocationDegrees.lat)")
+         */
         var request = URLRequest(url: URL(string:"https://onthemap-api.udacity.com/v1/StudentLocation")!)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
