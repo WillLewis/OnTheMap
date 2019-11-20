@@ -82,11 +82,15 @@ class TableViewController: UIViewController {
             detailVC.location = LocationModel.locations[selectedIndex]
         }
     }
+    
     @objc func exitOnMap (){
-        let detailVC = storyboard!.instantiateViewController(identifier: "Login") as! LogViewController
-        navigationController?.pushViewController(detailVC, animated: true)
-        UdacityClient.deleteSession(completion: handleLogOutResponse(success:error:))
+        presentingViewController?.dismiss(animated: true, completion: nil)
+        tabBarController?.dismiss(animated: true, completion: nil)
+        //self.navigationController?.popViewController(animated: true)
+        //self.dismiss(animated: true, completion: nil)
         
+        
+        UdacityClient.deleteSession(completion: handleLogOutResponse(success:error:))
     }
     
     func handleLogOutResponse (success: Bool, error: Error?) {

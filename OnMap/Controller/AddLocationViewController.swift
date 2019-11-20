@@ -70,6 +70,7 @@ class AddLocationViewController: UIViewController {
             }
         } else{
             showAddLocationFailure(message: error?.localizedDescription ?? "")
+            //navigationController?.popToRootViewController(animated: true)
         }
     }
     /*
@@ -86,8 +87,9 @@ class AddLocationViewController: UIViewController {
     func showAddLocationFailure(message: String){
         DispatchQueue.main.async{
             let alertVC = UIAlertController(title: "AddLocation Failed", message: message, preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil ))
             self.show(alertVC, sender: nil)
+            //navigationController?.popToRootViewController(animated: true)
         }
     
     }

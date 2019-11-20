@@ -24,6 +24,7 @@ class LogViewController: UIViewController {
         super.viewWillAppear(animated)
         emailTextField.text = ""
         passwordTextField.text = ""
+        activityIndicator.isHidden = true
     }
     
     @IBAction func loginTap(_ sender: Any) {
@@ -54,9 +55,11 @@ class LogViewController: UIViewController {
     func setLogginIn (_ loggingIn: Bool) {
         DispatchQueue.main.async {
             if loggingIn {
+                self.activityIndicator.isHidden = false
                 self.activityIndicator.startAnimating()
             } else {
                 self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
             }
             self.emailTextField.isEnabled = !loggingIn
             self.passwordTextField.isEnabled = !loggingIn

@@ -69,7 +69,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     @objc func exitOnMap (){
-        navigationController?.popToRootViewController(animated: true)
+         presentingViewController?.dismiss(animated: true, completion: nil)
+               tabBarController?.dismiss(animated: true, completion: nil)
+               //self.navigationController?.popViewController(animated: true)
+               //self.dismiss(animated: true, completion: nil)
+        
         UdacityClient.deleteSession(completion: handleLogOutResponse(success:error:))
         
     }

@@ -67,24 +67,34 @@ class UdacityClient {
                let dataSubset = data.subdata(in: range) //subset of data
                
                let response = try decoder.decode(SessionResponse.self, from: dataSubset)
-               DispatchQueue.main.async {
+            if response.session.id != "" {
+                DispatchQueue.main.async {
                     Auth.sessionKey = response.account?.key ?? "3903878747"
-                    Auth.sessionId = response.session?.id ?? "no sessionid"
+                    Auth.sessionId = response.session.id
+                    print("key is \(Auth.sessionKey)")
+                    print("sessionId is \(Auth.sessionId)")
+                    print("session is all good")
                     completion(true, nil)
-               }
-              
-               print("key is \(Auth.sessionKey)")
-               print("sessionId is \(Auth.sessionId)")
-               print("session is all good")
-           }catch {
-               print(error)
+                    }
+            }else {
+                completion(false, error)
+            }}
+           catch {
+                print(error)
                 DispatchQueue.main.async {
                     completion(false, error)
-                }
-            }}
-           
+            
+                        }
+                    }
+        }
            task.resume()
        }
+    /*
+     print("key is \(Auth.sessionKey)")
+                   print("sessionId is \(Auth.sessionId)")
+                   print("session is all good")
+     */
+    
     class func deleteSession (completion: @escaping (Bool, Error? ) -> Void ) {
         var request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/session")!)
             request.httpMethod = "DELETE"
@@ -106,8 +116,8 @@ class UdacityClient {
             
         let range = 5..<data.count
         let dataSubset = data.subdata(in: range) /* subset response data! */
-            
         print(String(data: dataSubset, encoding: .utf8)!)
+        completion(true, nil)
         }
         task.resume()
     }
