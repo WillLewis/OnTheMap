@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class AddLocationViewController: UIViewController {
     
@@ -43,26 +44,45 @@ class AddLocationViewController: UIViewController {
         if success{
             print("Latitude set to \(LocationDegrees.lat)")
             print("Longitude set to \(LocationDegrees.long)")
-            UdacityClient.addStudentLocation(mapString: locationTextField.text, mediaURL: urlTextField.text, completion: locationSetStatus(success:error:))
-                //self.performSegue(withIdentifier: "addToMap", sender: nil)
+            UdacityClient.addStudentLocation(mapString: locationTextField.text, mediaURL: urlTextField.text, completion: locationSetFocus(success:error:))
             } else {
                 showAddLocationFailure(message: error?.localizedDescription ?? "")
             }
     }
-    func locationSetStatus(success: Bool, error: Error?){
+    
+    /*If the orgin VC is the Map then after adding we center on new pin.
+     If the origin VC is the Table then pop back to table */
+    func locationSetFocus(success: Bool, error: Error?){
         if success{
             print("add location has been handled")
             //create a MKLocation using lat and long
             //store variable in mapview controller
             //set showsUserLocation = true
-            
-            navigationController?.popToRootViewController(animated: true)
-            
+            if self.navigationController!.viewControllers.first is MapViewController {
+                let controller: MapViewController
+                controller = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
+                let addedLocation = CLLocation(latitude: LocationDegrees.lat, longitude: LocationDegrees.long)
+                controller.centerLocation = addedLocation
+                controller.isCentered = true
+                navigationController?.pushViewController(controller, animated: true)
+            } else {
+               navigationController?.popToRootViewController(animated: true)
+            }
         } else{
             showAddLocationFailure(message: error?.localizedDescription ?? "")
         }
     }
-    
+    /*
+    override func prepare (for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let controller = segue.destination as! MapViewController
+        let addedLocation = CLLocation(latitude: LocationDegrees.lat, longitude: LocationDegrees.long)
+        controller.centerLocation = addedLocation
+        controller.isCentered = true
+        print("prepare set centered to \(controller.centerLocation)")
+        
+    }
+    */
     func showAddLocationFailure(message: String){
         DispatchQueue.main.async{
             let alertVC = UIAlertController(title: "AddLocation Failed", message: message, preferredStyle: .alert)

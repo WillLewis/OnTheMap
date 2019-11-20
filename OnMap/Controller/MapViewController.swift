@@ -13,7 +13,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     
     @IBOutlet weak var mapView: MKMapView!
-    
+    var isCentered = false
+    var centerLocation = CLLocation(latitude: 32.787663, longitude: -96.806163)
+    var regionRadius: CLLocationDistance = 100000
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -31,10 +33,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             let add  = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addTapped))
             let reload = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(self.reLoad))
             self.navigationItem.rightBarButtonItems = [add, reload]
-            self.loadData()
-            self.reloadInputViews()
             //self.mapView.delegate = self
-            
+            if self.isCentered{
+                self.centerMapOnLocation(location: self.centerLocation)
+            }
+            self.loadData()
+            //self.reloadInputViews()
         }
         }
         
@@ -47,11 +51,18 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }*/
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.mapView.delegate = self
         self.loadData()
         self.reloadInputViews()
         mapView.setUserTrackingMode(.follow, animated: true)
         // Do any additional setup after loading the view.
         mapView.showsUserLocation = false
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.isCentered = false
     }
     
     @objc func addTapped(){
@@ -126,6 +137,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    func centerMapOnLocation(location: CLLocation) {
+        let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+            mapView.setRegion(coordinateRegion, animated: true)
+    }
     
 }
 
