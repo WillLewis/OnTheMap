@@ -60,6 +60,7 @@ class TableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView?.reloadData()
         /*
         UdacityClient.getStudentLocations() { locations, error in
                 LocationModel.locations = locations
@@ -127,7 +128,9 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
         self.navigationController!.pushViewController(detailController, animated: true)
     }
     
-    //Verify the url and if its no good try verifying a name and using a google search of name...if name no good...then use default
+    /* if the url can be opened use that as the url
+     ...if its no good try verifying the name, and if ok, use a google search of name
+     ...if the name is no good...then use linkedin as the default url*/
     func setURL(urlString: String?, first: String?, last: String?) -> String {
         let name = (first ?? "") + "+" + (last ?? "")
         

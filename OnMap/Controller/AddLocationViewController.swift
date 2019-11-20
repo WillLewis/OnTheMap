@@ -32,23 +32,40 @@ class AddLocationViewController: UIViewController {
             showAddLocationFailure(message: "should be something like https://www.hi.com")
             return
         }
-        UdacityClient.getCoordinate(addressString: self.urlTextField.text ?? "", completion: handleAddLocationResponse(success:error:))
+        print("calling getCorrdinate with \(String(describing: locationTextField.text))")
+        UdacityClient.getCoordinate(addressString: locationTextField.text ?? "", completion: handleAddLocationResponse(success:error:))
         }
         
 
     
     func handleAddLocationResponse( success: Bool, error: Error?){
-            if success{
-                UdacityClient.addStudentLocation(mapString: self.locationTextField.text, mediaURL: self.urlTextField.text, completion: handleAddLocationResponse(success:error:))
-                self.performSegue(withIdentifier: "addToMap", sender: nil)
+        
+        if success{
+            print("Latitude set to \(LocationDegrees.lat)")
+            print("Longitude set to \(LocationDegrees.long)")
+            UdacityClient.addStudentLocation(mapString: locationTextField.text, mediaURL: urlTextField.text, completion: locationSetStatus(success:error:))
+                //self.performSegue(withIdentifier: "addToMap", sender: nil)
             } else {
                 showAddLocationFailure(message: error?.localizedDescription ?? "")
             }
     }
+    func locationSetStatus(success: Bool, error: Error?){
+        if success{
+            print("add location has been handled")
+            //create a MKLocation using lat and long
+            //store variable in mapview controller
+            //set showsUserLocation = true
+            
+            navigationController?.popToRootViewController(animated: true)
+            
+        } else{
+            showAddLocationFailure(message: error?.localizedDescription ?? "")
+        }
+    }
     
     func showAddLocationFailure(message: String){
         DispatchQueue.main.async{
-            let alertVC = UIAlertController(title: "Ugh Adding Location Failed", message: message, preferredStyle: .alert)
+            let alertVC = UIAlertController(title: "AddLocation Failed", message: message, preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.show(alertVC, sender: nil)
         }

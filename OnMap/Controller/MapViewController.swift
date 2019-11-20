@@ -21,7 +21,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         UdacityClient.getStudentLocations() {(data, error) in
             guard data != nil else {
             return
-            
         }
         
         // The lat and long are used to create a CLLocationCoordinates2D instance.
@@ -34,6 +33,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             self.navigationItem.rightBarButtonItems = [add, reload]
             self.loadData()
             self.reloadInputViews()
+            //self.mapView.delegate = self
+            
         }
         }
         
@@ -46,7 +47,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }*/
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.loadData()
+        self.reloadInputViews()
+        mapView.setUserTrackingMode(.follow, animated: true)
         // Do any additional setup after loading the view.
+        mapView.showsUserLocation = false
     }
     
     @objc func addTapped(){
@@ -83,7 +88,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 annotation.subtitle = mapMediaUrl
                 annotations.append(annotation)
             }
-            self.mapView.addAnnotations(annotations)
+            DispatchQueue.main.async {
+                self.mapView.addAnnotations(annotations)
+            }
         }
     }
     // MARK: - MKMapViewDelegate
@@ -118,6 +125,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             }
         }
     }
+    
     
 }
 

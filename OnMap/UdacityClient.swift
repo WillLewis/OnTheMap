@@ -72,7 +72,7 @@ class UdacityClient {
                     Auth.sessionId = response.session?.id ?? "no sessionid"
                     completion(true, nil)
                }
-               print(response.account?.key)
+              
                print("key is \(Auth.sessionKey)")
                print("sessionId is \(Auth.sessionId)")
                print("session is all good")
@@ -87,7 +87,7 @@ class UdacityClient {
        }
     
     class func getStudentLocations ( completion: @escaping ([Location]?, Error?) -> Void ) {
-        let task = URLSession.shared.dataTask(with: URL(string:"https://onthemap-api.udacity.com/v1/StudentLocation?order=-updatedAt?limit=100")!) { data, response, error in
+        let task = URLSession.shared.dataTask(with: URL(string:"https://onthemap-api.udacity.com/v1/StudentLocation?limit=500?order=-updatedAt")!) { data, response, error in
             guard let data = data else {
                 completion ([], error)
                 print("problem with get StudentLocation URL")
@@ -97,7 +97,6 @@ class UdacityClient {
             let decoder = JSONDecoder()
             do {
                 let response = try decoder.decode(LocationResults.self, from: data)
-                print(String(data: data, encoding: .utf8))
                 completion( response.results, nil)
             } catch let error as NSError { /* cast error to `NSError` */
                print(error.domain)
@@ -142,7 +141,12 @@ class UdacityClient {
     
     class func addStudentLocation (mapString: String?, mediaURL: String?, completion: @escaping (Bool, Error?) -> Void){
         let body = PostLocation(uniqueKey: Auth.sessionKey, firstName: Auth.firstName, lastName: Auth.lastName, mapString: mapString, mediaURL: mediaURL, latitude: Float(LocationDegrees.lat), longitude: Float(LocationDegrees.long))
-        
+        print("The First Name is \(Auth.firstName)")
+        print("The Last Name is \(Auth.lastName)")
+        print("The map string is \(String(describing: mapString))")
+        print("The media url is \(String(describing: mediaURL))")
+        print("The longitude  is \(LocationDegrees.long)")
+        print("The latitude  is \(LocationDegrees.lat)")
         var request = URLRequest(url: URL(string:"https://onthemap-api.udacity.com/v1/StudentLocation")!)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -157,10 +161,10 @@ class UdacityClient {
             }
             let decoder = JSONDecoder()
             do {
-                let range = 5..<data.count
-                let dataSubset = data.subdata(in: range) //subset of data
+                //let range = 5..<data.count
+                //let dataSubset = data.subdata(in: range) //subset of data
                 
-                let response = try decoder.decode(PostLocationResponse.self, from: dataSubset)
+                let response = try decoder.decode(PostLocationResponse.self, from: data)
                 DispatchQueue.main.async {
                     Auth.objectId = response.objectId
                     completion(true, nil)
@@ -168,8 +172,11 @@ class UdacityClient {
                 
                 print("objectId is \(Auth.objectId)")
                 print("addStudentLocation is all good")
-            }catch {
-                print(error)
+            }catch let error as NSError  {
+                print("error description: \(error.localizedDescription)")
+                print("error domain: \(error.domain)")
+                print("error code: \(error.code)")
+                print("error user info: \(error.userInfo)")
                 completion(false, error)
             }
             }
@@ -190,6 +197,7 @@ class UdacityClient {
                     return
                     }
             }
+               
                 completion(false, error)
             }
     }
