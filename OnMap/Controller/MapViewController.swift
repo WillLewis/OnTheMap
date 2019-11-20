@@ -41,7 +41,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 self.centerMapOnLocation(location: self.centerLocation)
             }
             self.loadData()
-            //self.reloadInputViews()
+            self.reloadInputViews()
         }
         }
         
@@ -54,7 +54,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }*/
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.mapView.delegate = self
+        //self.mapView.delegate = self
         self.loadData()
         self.reloadInputViews()
         mapView.setUserTrackingMode(.follow, animated: true)
@@ -69,8 +69,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     @objc func exitOnMap (){
-        let detailVC = storyboard!.instantiateViewController(identifier: "Login") as! LogViewController
-        navigationController?.pushViewController(detailVC, animated: true)
+        navigationController?.popToRootViewController(animated: true)
         UdacityClient.deleteSession(completion: handleLogOutResponse(success:error:))
         
     }
@@ -116,9 +115,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 annotation.title = "\(String(describing: firstMapName)) \(String(describing: lastMapName))"
                 annotation.subtitle = mapMediaUrl
                 annotations.append(annotation)
+                
+                
             }
             DispatchQueue.main.async {
+                
+               
                 self.mapView.addAnnotations(annotations)
+               // self.mapView.showAnnotations(annotations, animated: true)
             }
         }
     }
@@ -136,6 +140,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             pinView!.canShowCallout = true
             pinView!.pinTintColor = .systemTeal
             pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            pinView!.annotation = annotation
+            pinView!.displayPriority = .required
+            
         }
         else {
             pinView!.annotation = annotation
