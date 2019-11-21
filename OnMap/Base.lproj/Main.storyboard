@@ -131,10 +131,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-u" translatesAutoresizingMaskIntoConstraints="NO" id="aUd-ym-aDa">
-                                <rect key="frame" x="176" y="157" width="62" height="62"/>
+                                <rect key="frame" x="145" y="157" width="124" height="124"/>
                             </imageView>
                             <stackView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="vlK-GX-cWu">
-                                <rect key="frame" x="52" y="289" width="310" height="116"/>
+                                <rect key="frame" x="52" y="351" width="310" height="116"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Email" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xbP-W4-LFF">
                                         <rect key="frame" x="0.0" y="0.0" width="310" height="34"/>
@@ -406,40 +406,18 @@
                                     <outlet property="delegate" destination="Tkk-9m-NHn" id="tdJ-Gw-tDp"/>
                                 </connections>
                             </mapView>
-                            <button contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IZg-9b-635">
-                                <rect key="frame" x="47" y="592" width="320" height="42"/>
-                                <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <viewLayoutGuide key="safeArea" id="33z-X5-jfL"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="CONFIRM LOCATION">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="confirmLocationWith_sender:" destination="VKG-XR-z6R" eventType="touchUpInside" id="Z8h-ym-tJJ"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="IZg-9b-635" firstAttribute="centerX" secondItem="HSY-9d-aLq" secondAttribute="centerX" id="5TM-Zn-csq"/>
-                            <constraint firstItem="IZg-9b-635" firstAttribute="top" secondItem="arm-ob-3A0" secondAttribute="top" constant="504" id="GmO-cr-UJ6"/>
-                            <constraint firstItem="arm-ob-3A0" firstAttribute="bottom" secondItem="IZg-9b-635" secondAttribute="bottom" constant="228" id="LQM-4M-NTB"/>
-                            <constraint firstItem="IZg-9b-635" firstAttribute="leading" secondItem="arm-ob-3A0" secondAttribute="leading" constant="47" id="Ugz-AQ-F4J"/>
-                            <constraint firstItem="HSY-9d-aLq" firstAttribute="top" secondItem="arm-ob-3A0" secondAttribute="top" id="bzJ-Vx-8F8"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="HSY-9d-aLq" secondAttribute="bottom" constant="-89" id="c5G-5j-cn4"/>
-                            <constraint firstItem="IZg-9b-635" firstAttribute="centerX" secondItem="Tkk-9m-NHn" secondAttribute="centerX" id="gFZ-Yz-QLG"/>
-                            <constraint firstItem="HSY-9d-aLq" firstAttribute="leading" secondItem="arm-ob-3A0" secondAttribute="leading" id="n7k-aE-dtq"/>
+                            <constraint firstItem="HSY-9d-aLq" firstAttribute="leading" secondItem="arm-ob-3A0" secondAttribute="leading" id="39v-lP-Q3b"/>
+                            <constraint firstItem="HSY-9d-aLq" firstAttribute="top" secondItem="arm-ob-3A0" secondAttribute="top" id="D5Y-Ii-gf1"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="HSY-9d-aLq" secondAttribute="bottom" constant="-89" id="VQ6-7Z-18Z"/>
+                            <constraint firstItem="HSY-9d-aLq" firstAttribute="centerX" secondItem="Tkk-9m-NHn" secondAttribute="centerX" id="eft-an-KFA"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="arm-ob-3A0"/>
                     </view>
                     <navigationItem key="navigationItem" id="b69-mj-W3I"/>
                     <connections>
-                        <outlet property="confirmButton" destination="IZg-9b-635" id="fSP-Ey-OJl"/>
                         <outlet property="mapView" destination="HSY-9d-aLq" id="yry-mP-EEb"/>
                     </connections>
                 </viewController>

@@ -8,11 +8,26 @@
 
 import UIKit
 import MapKit
+import Foundation
 
 class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
 
-    @IBOutlet weak var confirmButton: UIButton!
+   
     @IBOutlet weak var mapView: MKMapView!
+        
+        private var floatingConfirmButton: UIButton?
+        private static let buttonHeight: CGFloat = 40.0
+        private static let buttonWidth: CGFloat = 310.0
+        private let trailingValue: CGFloat = 30.0
+        private let leadingValue: CGFloat = 30.0
+        private let shadowRadius: CGFloat = 2.0
+        private let shadowOpacity: Float = 0.5
+        private let shadowOffset = CGSize(width: 0.0, height: 5.0)
+        private let scaleKeyPath = "scale"
+        private let animationKeyPath = "transform.scale"
+        private let animationDuration: CFTimeInterval = 0.2
+        private let animateFromValue: CGFloat = 1.00
+        private let animateToValue: CGFloat = 1.02
     
         var isCentered = false
         var centerLocation = CLLocation(latitude: 32.787663, longitude: -96.806163)
@@ -20,9 +35,11 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
         
         override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
+            mapView.delegate = self
+            self.tabBarController?.tabBar.isHidden = true
+            createFloatingButton()
             
            // self.mapView.addSubview(confirmButton)
-            
             UdacityClient.getStudentLocations() {(data, error) in
                 guard data != nil else {
                 return
@@ -33,6 +50,13 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
                 if self.isCentered{
                     self.centerMapOnLocation(location: self.centerLocation)
                 }
+                /*
+                self.mapView.addSubview(self.confirmButton)
+                    self.confirmButton.layer.shadowOpacity = 0.8
+                self.confirmButton.layer.shadowOffset = CGSize.zero
+                    self.confirmButton.sizeToFit()
+                self.confirmButton.autoresizingMask = []
+                self.confirmButton.backgroundColor = .systemTeal*/
                 self.loadData()
                 self.reloadInputViews()
             }
@@ -53,28 +77,38 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
             mapView.setUserTrackingMode(.follow, animated: true)
             // Do any additional setup after loading the view.
             mapView.showsUserLocation = false
-            
-            mapView.addSubview(confirmButton)
-            confirmButton.layer.shadowOpacity = 0.8
-            confirmButton.layer.shadowOffset = CGSize.zero
-            confirmButton.sizeToFit()
-            confirmButton.autoresizingMask = []
-            confirmButton.backgroundColor = .systemTeal
-        
+            //addFloatingButtonObj()
         }
         
         override func viewDidDisappear(_ animated: Bool) {
-            super.viewDidDisappear(animated)
-            self.isCentered = false
+            guard floatingConfirmButton?.superview != nil else {  return }
+                DispatchQueue.main.async {
+                    self.floatingConfirmButton?.removeFromSuperview()
+                    self.floatingConfirmButton = nil
+                    self.isCentered = false
+                }
+            super.viewWillDisappear(animated)
         }
+    
+    
+    func createFloatingButton(){
+        floatingConfirmButton = UIButton(type: .custom)
+        floatingConfirmButton?.translatesAutoresizingMaskIntoConstraints = false
+        floatingConfirmButton?.backgroundColor = .systemTeal
+        floatingConfirmButton?.setTitle("CONFIRM LOCATION", for: .normal)
+        floatingConfirmButton?.center = self.view.center
+        floatingConfirmButton?.addTarget(self, action: #selector(self.didPressConfirm), for: .touchUpInside)
+        constrainFloatingButtonToWindow()
+        addShadowToFloatingButton()
+        addScaleAnimationToFloatingButton()
+    }
         
-        
-    @IBAction func confirmLocation (_sender: Any) {
+    @objc func didPressConfirm (_sender: Any) {
         UdacityClient.addStudentLocation(mapString: AddLocationViewController.Entry.mapEntry, mediaURL: AddLocationViewController.Entry.urlEntry, completion: handleConfirmLocation(success:error:))
         
         //dynamic change of text
         DispatchQueue.main.async{
-            self.confirmButton.setTitle("LOCATION CONFIRMED", for: .normal)
+            self.floatingConfirmButton?.setTitle("LOCATION CONFIRMED", for: .normal)
         }
         //segue to map after delay
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
@@ -96,8 +130,45 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
         
     }
     
+    func constrainFloatingButtonToWindow() {
+        DispatchQueue.main.async {
+            guard let keyWindow = UIApplication.shared.keyWindow,
+                let floatingConfirmButton = self.floatingConfirmButton else { return }
+            keyWindow.addSubview(floatingConfirmButton)
+            keyWindow.trailingAnchor.constraint(equalTo: floatingConfirmButton.trailingAnchor,
+                                                constant: self.trailingValue).isActive = true
+            keyWindow.bottomAnchor.constraint(equalTo: floatingConfirmButton.bottomAnchor,
+                                              constant: self.leadingValue).isActive = true
+            //let screenSize: CGRect = UIScreen.main.bounds
+            floatingConfirmButton.widthAnchor.constraint(equalToConstant:
+                ConfirmLocationViewController.buttonWidth).isActive = true
+            floatingConfirmButton.heightAnchor.constraint(equalToConstant:
+                ConfirmLocationViewController.buttonHeight).isActive = true
+        
+        }
+    }
+    func addShadowToFloatingButton() {
+        floatingConfirmButton?.layer.shadowColor = UIColor.black.cgColor
+        floatingConfirmButton?.layer.shadowOffset = shadowOffset
+        floatingConfirmButton?.layer.masksToBounds = false
+        floatingConfirmButton?.layer.shadowRadius = shadowRadius
+        floatingConfirmButton?.layer.shadowOpacity = shadowOpacity
+    }
     
-        func loadData(){
+    func addScaleAnimationToFloatingButton() {
+        // Add a pulsing animation to draw attention to button:
+        DispatchQueue.main.async {
+            let scaleAnimation: CABasicAnimation = CABasicAnimation(keyPath: self.animationKeyPath)
+            scaleAnimation.duration = self.animationDuration
+            scaleAnimation.repeatCount = .greatestFiniteMagnitude
+            scaleAnimation.autoreverses = true
+            scaleAnimation.fromValue = self.animateFromValue
+            scaleAnimation.toValue = self.animateToValue
+            self.floatingConfirmButton?.layer.add(scaleAnimation, forKey: self.scaleKeyPath)
+        }
+    }
+    
+    func loadData(){
             UdacityClient.getStudentLocations() {(data, error) in
                 guard let data = data else {
                     return
