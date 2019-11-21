@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		77412D3D2386295200B4BCAF /* ConfirmLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77412D3C2386295200B4BCAF /* ConfirmLocationViewController.swift */; };
 		77A8B269237E0B7B00675F36 /* UserDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A8B268237E0B7B00675F36 /* UserDataResponse.swift */; };
 		77A8B26B237E13A600675F36 /* PostLocationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A8B26A237E13A600675F36 /* PostLocationResponse.swift */; };
 		77A8B26D237E286600675F36 /* LocationDegrees.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A8B26C237E286600675F36 /* LocationDegrees.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		77412D3C2386295200B4BCAF /* ConfirmLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLocationViewController.swift; sourceTree = "<group>"; };
 		77A8B268237E0B7B00675F36 /* UserDataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataResponse.swift; sourceTree = "<group>"; };
 		77A8B26A237E13A600675F36 /* PostLocationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLocationResponse.swift; sourceTree = "<group>"; };
 		77A8B26C237E286600675F36 /* LocationDegrees.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDegrees.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			children = (
 				77E4E407237A299A00477CE6 /* LogViewController.swift */,
 				77E4E3E32375090500477CE6 /* MapViewController.swift */,
+				77412D3C2386295200B4BCAF /* ConfirmLocationViewController.swift */,
 				77E38C0F237B8F3800B0FB00 /* AddLocationViewController.swift */,
 				77E4E3E52375090500477CE6 /* TableViewController.swift */,
 				77E4E412237A579F00477CE6 /* WebViewController.swift */,
@@ -216,6 +219,7 @@
 				77A8B26D237E286600675F36 /* LocationDegrees.swift in Sources */,
 				77E4E40C237A4BD200477CE6 /* Location.swift in Sources */,
 				77E4E4002375EE9400477CE6 /* Account.swift in Sources */,
+				77412D3D2386295200B4BCAF /* ConfirmLocationViewController.swift in Sources */,
 				77A8B269237E0B7B00675F36 /* UserDataResponse.swift in Sources */,
 				77E4E3FE2375E0F100477CE6 /* SessionResponse.swift in Sources */,
 				77E4E4022375EEDD00477CE6 /* Session.swift in Sources */,

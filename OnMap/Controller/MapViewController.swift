@@ -24,9 +24,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             guard data != nil else {
             return
         }
-        
-        // The lat and long are used to create a CLLocationCoordinates2D instance.
-        let coordinate = CLLocationCoordinate2D(latitude: LocationDegrees.lat, longitude: LocationDegrees.long)
+
         
         DispatchQueue.main.async {
             self.navigationItem.title = "Map of Locations"

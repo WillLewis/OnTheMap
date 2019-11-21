@@ -251,7 +251,7 @@
                                     <constraint firstAttribute="height" constant="90" id="wvw-4p-Hjs"/>
                                 </constraints>
                             </imageView>
-                            <stackView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="3eK-4u-oZO">
+                            <stackView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="3eK-4u-oZO">
                                 <rect key="frame" x="52" y="250" width="310" height="116"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter a location" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H6P-lI-mOG">
@@ -281,7 +281,6 @@
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="addLocation:" destination="pC9-7e-pI6" eventType="touchUpInside" id="QUX-6j-VFW"/>
-                                            <action selector="loginTap:" destination="pgN-DJ-Efz" eventType="touchUpInside" id="P9s-8V-xi1"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -392,6 +391,79 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aJK-5O-Obj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3502.898550724638" y="-361.60714285714283"/>
+        </scene>
+        <!--Confirm Location View Controller-->
+        <scene sceneID="u2V-4g-00W">
+            <objects>
+                <viewController storyboardIdentifier="ConfirmLocationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VKG-XR-z6R" customClass="ConfirmLocationViewController" customModule="OnMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Tkk-9m-NHn">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="HSY-9d-aLq">
+                                <rect key="frame" x="0.0" y="88" width="414" height="863"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Tkk-9m-NHn" id="tdJ-Gw-tDp"/>
+                                </connections>
+                            </mapView>
+                            <button contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IZg-9b-635">
+                                <rect key="frame" x="47" y="592" width="320" height="42"/>
+                                <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <viewLayoutGuide key="safeArea" id="33z-X5-jfL"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="CONFIRM LOCATION">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="confirmLocationWith_sender:" destination="VKG-XR-z6R" eventType="touchUpInside" id="Z8h-ym-tJJ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="IZg-9b-635" firstAttribute="centerX" secondItem="HSY-9d-aLq" secondAttribute="centerX" id="5TM-Zn-csq"/>
+                            <constraint firstItem="IZg-9b-635" firstAttribute="top" secondItem="arm-ob-3A0" secondAttribute="top" constant="504" id="GmO-cr-UJ6"/>
+                            <constraint firstItem="arm-ob-3A0" firstAttribute="bottom" secondItem="IZg-9b-635" secondAttribute="bottom" constant="228" id="LQM-4M-NTB"/>
+                            <constraint firstItem="IZg-9b-635" firstAttribute="leading" secondItem="arm-ob-3A0" secondAttribute="leading" constant="47" id="Ugz-AQ-F4J"/>
+                            <constraint firstItem="HSY-9d-aLq" firstAttribute="top" secondItem="arm-ob-3A0" secondAttribute="top" id="bzJ-Vx-8F8"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="HSY-9d-aLq" secondAttribute="bottom" constant="-89" id="c5G-5j-cn4"/>
+                            <constraint firstItem="IZg-9b-635" firstAttribute="centerX" secondItem="Tkk-9m-NHn" secondAttribute="centerX" id="gFZ-Yz-QLG"/>
+                            <constraint firstItem="HSY-9d-aLq" firstAttribute="leading" secondItem="arm-ob-3A0" secondAttribute="leading" id="n7k-aE-dtq"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="arm-ob-3A0"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="b69-mj-W3I"/>
+                    <connections>
+                        <outlet property="confirmButton" destination="IZg-9b-635" id="fSP-Ey-OJl"/>
+                        <outlet property="mapView" destination="HSY-9d-aLq" id="yry-mP-EEb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="V8A-oY-GtL" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6302.898550724638" y="-362.27678571428572"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="lAj-L8-dhl">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="44D-Ch-Bqv" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9aO-V0-Q7f">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="VKG-XR-z6R" kind="relationship" relationship="rootViewController" id="ixa-s4-V82"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qsv-dV-x84" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5392.753623188406" y="-362.27678571428572"/>
         </scene>
     </scenes>
     <resources>

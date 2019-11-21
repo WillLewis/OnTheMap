@@ -11,6 +11,11 @@ import MapKit
 
 class AddLocationViewController: UIViewController {
     
+    struct Entry{
+        static var mapEntry = ""
+        static var urlEntry = ""
+    }
+    
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var urlTextField: UITextField!
     @IBOutlet weak var addLocationButton: UIButton!
@@ -20,6 +25,8 @@ class AddLocationViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         activityIndicator.isHidden = true
+       //self.tabBarController?.dismiss(animated: false, completion: nil)
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +39,6 @@ class AddLocationViewController: UIViewController {
             self.activityIndicator.isHidden = false
             self.activityIndicator.startAnimating()
         }
-        
         if self.locationTextField.text == "" {
          showAddLocationFailure(message: "Oh Cmon...give me a city and state")
         }
@@ -44,7 +50,8 @@ class AddLocationViewController: UIViewController {
             showAddLocationFailure(message: "should be something like https://www.hi.com")
             return
         }
-        print("calling getCorrdinate with \(String(describing: locationTextField.text))")
+        setPostLocationStruct()
+        //print("calling getCorrdinate with \(String(describing: locationTextField.text))")
         UdacityClient.getCoordinate(addressString: locationTextField.text ?? "", completion: handleAddLocationResponse(success:error:))
         }
         
@@ -56,48 +63,28 @@ class AddLocationViewController: UIViewController {
             self.activityIndicator.stopAnimating()
         }
         if success{
-            print("Latitude set to \(LocationDegrees.lat)")
-            print("Longitude set to \(LocationDegrees.long)")
-            UdacityClient.addStudentLocation(mapString: locationTextField.text, mediaURL: urlTextField.text, completion: locationSetFocus(success:error:))
+            //print("Latitude set to \(LocationDegrees.lat)")
+            //print("Longitude set to \(LocationDegrees.long)")
+            
+            let controller: ConfirmLocationViewController
+            controller = self.storyboard?.instantiateViewController(withIdentifier: "ConfirmLocationViewController") as! ConfirmLocationViewController
+            let addedLocation = CLLocation(latitude: LocationDegrees.lat, longitude: LocationDegrees.long)
+            controller.centerLocation = addedLocation
+            controller.isCentered = true
+            navigationController?.pushViewController(controller, animated: true)
+            
             } else {
-                showAddLocationFailure(message: error?.localizedDescription ?? "")
+               showAddLocationFailure(message: "\(String(describing: error?.localizedDescription))")
             }
     }
     
-    /*If the orgin VC is the Map then after adding we center on new pin.
-     If the origin VC is the Table then pop back to table */
-    func locationSetFocus(success: Bool, error: Error?){
-        if success{
-            print("add location has been handled")
-            //create a MKLocation using lat and long
-            //store variable in mapview controller
-            //set showsUserLocation = true
-            if self.navigationController!.viewControllers.first is MapViewController {
-                let controller: MapViewController
-                controller = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
-                let addedLocation = CLLocation(latitude: LocationDegrees.lat, longitude: LocationDegrees.long)
-                controller.centerLocation = addedLocation
-                controller.isCentered = true
-                navigationController?.pushViewController(controller, animated: true)
-            } else {
-               navigationController?.popToRootViewController(animated: true)
-            }
-        } else{
-            showAddLocationFailure(message: "\(String(describing: error?.localizedDescription))")
-            //navigationController?.popToRootViewController(animated: true)
-        }
+    func setPostLocationStruct(){
+        Entry.urlEntry = urlTextField.text ?? ""
+        Entry.mapEntry = locationTextField.text ?? ""
+
     }
-    /*
-    override func prepare (for segue: UIStoryboardSegue, sender: Any?) {
-        
-        let controller = segue.destination as! MapViewController
-        let addedLocation = CLLocation(latitude: LocationDegrees.lat, longitude: LocationDegrees.long)
-        controller.centerLocation = addedLocation
-        controller.isCentered = true
-        print("prepare set centered to \(controller.centerLocation)")
-        
-    }
-    */
+
+   
     func showAddLocationFailure(message: String){
         DispatchQueue.main.async{
             self.activityIndicator.isHidden = true
@@ -106,9 +93,6 @@ class AddLocationViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil ))
             
             self.present(alert, animated: true, completion: nil)
-            
-           
-            //navigationController?.popToRootViewController(animated: true)
         }
     
     }
