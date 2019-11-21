@@ -69,22 +69,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     @objc func exitOnMap (){
-         presentingViewController?.dismiss(animated: true, completion: nil)
-               tabBarController?.dismiss(animated: true, completion: nil)
-               //self.navigationController?.popViewController(animated: true)
-               //self.dismiss(animated: true, completion: nil)
-        
-        UdacityClient.deleteSession(completion: handleLogOutResponse(success:error:))
-        
+       logoutHandler()
     }
-    func handleLogOutResponse (success: Bool, error: Error?) {
-        if success {
-            print("logged out")
-            
-        } else {
-            showLogoutFailure(message: error?.localizedDescription ?? "")
-        }
-    }
+    
     
     @objc func addTapped(){
         let detailVC = storyboard!.instantiateViewController(identifier: "AddLocation") as! AddLocationViewController
@@ -171,6 +158,22 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             mapView.setRegion(coordinateRegion, animated: true)
     }
     
+    //dismiss navigation controller and tab bar
+    func logoutHandler() {
+        presentingViewController?.dismiss(animated: true, completion: nil)
+        tabBarController?.dismiss(animated: true, completion: nil)
+        UdacityClient.deleteSession(completion: handleLogOutResponse(success:error:))
+    }
+    
+    func handleLogOutResponse (success: Bool, error: Error?) {
+        if success {
+            print("logged out")
+            
+        } else {
+            showLogoutFailure(message: error?.localizedDescription ?? "")
+        }
+    }
+    
     func showLogoutFailure(message: String){
         DispatchQueue.main.async{
             let alertVC = UIAlertController(title: "LogOut Failed", message: message, preferredStyle: .alert)
@@ -179,6 +182,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     
     }
+    
     
 }
 

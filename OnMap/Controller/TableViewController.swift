@@ -47,7 +47,7 @@ class TableViewController: UIViewController {
             return
             }
             DispatchQueue.main.async {
-                self.navigationItem.title = "Approved Links or Google"
+                self.navigationItem.title = "Links"
                 //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "More", style: .plain, target: self, action: #selector(openTapped))
                 let add  = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addTapped))
                 let reload = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(self.reLoad))
@@ -84,23 +84,10 @@ class TableViewController: UIViewController {
     }
     
     @objc func exitOnMap (){
-        presentingViewController?.dismiss(animated: true, completion: nil)
-        tabBarController?.dismiss(animated: true, completion: nil)
-        //self.navigationController?.popViewController(animated: true)
-        //self.dismiss(animated: true, completion: nil)
-        
-        
-        UdacityClient.deleteSession(completion: handleLogOutResponse(success:error:))
+        logoutHandler()
     }
     
-    func handleLogOutResponse (success: Bool, error: Error?) {
-        if success {
-            print("logged out")
-            
-        } else {
-            showLogoutFailure(message: error?.localizedDescription ?? "")
-        }
-    }
+
     
     @objc func addTapped(){
         let detailVC = storyboard!.instantiateViewController(identifier: "AddLocation") as! AddLocationViewController
@@ -185,14 +172,30 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    func showLogoutFailure(message: String){
-        DispatchQueue.main.async{
-            let alertVC = UIAlertController(title: "LogOut Failed", message: message, preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.show(alertVC, sender: nil)
-        }
-    
-    }
+     //dismiss navigation controller and tab bar
+       func logoutHandler() {
+           presentingViewController?.dismiss(animated: true, completion: nil)
+           tabBarController?.dismiss(animated: true, completion: nil)
+           UdacityClient.deleteSession(completion: handleLogOutResponse(success:error:))
+       }
+       
+       func handleLogOutResponse (success: Bool, error: Error?) {
+           if success {
+               print("logged out")
+               
+           } else {
+               showLogoutFailure(message: error?.localizedDescription ?? "")
+           }
+       }
+       
+       func showLogoutFailure(message: String){
+           DispatchQueue.main.async{
+               let alertVC = UIAlertController(title: "LogOut Failed", message: message, preferredStyle: .alert)
+               alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+               self.show(alertVC, sender: nil)
+           }
+       
+       }
     
         
 }
