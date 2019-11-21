@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="D67-Rr-x25">
-                                <rect key="frame" x="0.0" y="56" width="414" height="703"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                                 <connections>
                                     <outlet property="delegate" destination="tsR-hK-woN" id="4hf-6u-ii9"/>
                                 </connections>
@@ -248,10 +248,10 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_world" translatesAutoresizingMaskIntoConstraints="NO" id="efO-bS-9WB">
                                 <rect key="frame" x="167" y="108" width="80" height="90"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="NqF-IE-Pas"/>
+                                    <constraint firstAttribute="height" constant="90" id="wvw-4p-Hjs"/>
                                 </constraints>
                             </imageView>
-                            <stackView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="3eK-4u-oZO">
+                            <stackView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="3eK-4u-oZO">
                                 <rect key="frame" x="52" y="250" width="310" height="116"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter a location" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H6P-lI-mOG">
@@ -286,21 +286,29 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="FXl-as-LyO">
+                                <rect key="frame" x="197" y="414" width="20" height="69"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="69" id="rcI-FC-bPe"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="efO-bS-9WB" firstAttribute="centerX" secondItem="Q4Z-zE-lN1" secondAttribute="centerX" id="5fn-Fq-cPM"/>
-                            <constraint firstItem="3eK-4u-oZO" firstAttribute="top" secondItem="efO-bS-9WB" secondAttribute="bottom" constant="52" id="LAV-bn-Hwt"/>
-                            <constraint firstItem="3eK-4u-oZO" firstAttribute="top" relation="greaterThanOrEqual" secondItem="efO-bS-9WB" secondAttribute="bottom" priority="800" constant="60" id="T7v-dX-Ssz"/>
-                            <constraint firstItem="3eK-4u-oZO" firstAttribute="leading" secondItem="asm-Ci-zSZ" secondAttribute="leading" constant="52" id="UAn-9U-CsS"/>
-                            <constraint firstItem="efO-bS-9WB" firstAttribute="centerX" secondItem="3eK-4u-oZO" secondAttribute="centerX" id="YmV-M5-2jq"/>
-                            <constraint firstItem="efO-bS-9WB" firstAttribute="leading" secondItem="asm-Ci-zSZ" secondAttribute="leading" constant="167" id="ZZd-NA-TpY"/>
-                            <constraint firstItem="efO-bS-9WB" firstAttribute="top" secondItem="asm-Ci-zSZ" secondAttribute="top" constant="52" id="ecX-4z-u2i"/>
+                            <constraint firstItem="efO-bS-9WB" firstAttribute="leading" secondItem="asm-Ci-zSZ" secondAttribute="leading" constant="167" id="3sh-RT-dvu"/>
+                            <constraint firstItem="efO-bS-9WB" firstAttribute="centerX" secondItem="Q4Z-zE-lN1" secondAttribute="centerX" id="Y22-kv-Qtw"/>
+                            <constraint firstItem="efO-bS-9WB" firstAttribute="top" secondItem="asm-Ci-zSZ" secondAttribute="top" constant="52" id="ZhJ-Hn-7Qx"/>
+                            <constraint firstItem="efO-bS-9WB" firstAttribute="centerX" secondItem="3eK-4u-oZO" secondAttribute="centerX" id="a6b-iV-ftz"/>
+                            <constraint firstItem="3eK-4u-oZO" firstAttribute="top" secondItem="efO-bS-9WB" secondAttribute="bottom" constant="52" id="leD-f6-DXm"/>
+                            <constraint firstItem="3eK-4u-oZO" firstAttribute="centerX" secondItem="FXl-as-LyO" secondAttribute="centerX" id="rXq-Jv-2u1"/>
+                            <constraint firstItem="3eK-4u-oZO" firstAttribute="leading" secondItem="asm-Ci-zSZ" secondAttribute="leading" constant="52" id="rjD-1H-fZV"/>
+                            <constraint firstItem="FXl-as-LyO" firstAttribute="top" secondItem="3eK-4u-oZO" secondAttribute="bottom" constant="48" id="wbu-1v-eLP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="asm-Ci-zSZ"/>
                     </view>
                     <navigationItem key="navigationItem" id="mTY-08-wX4"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="FXl-as-LyO" id="XER-6L-DNe"/>
                         <outlet property="addLocationButton" destination="cee-yA-X31" id="kFP-L0-duj"/>
                         <outlet property="locationTextField" destination="H6P-lI-mOG" id="ZEo-oM-faG"/>
                         <outlet property="urlTextField" destination="fqQ-yG-0tc" id="kkc-9c-Gpn"/>
@@ -397,6 +405,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="nPW-ps-qJg"/>
         <segue reference="fOr-3m-bO0"/>
-        <segue reference="32L-gI-W4h"/>
+        <segue reference="xiQ-xq-NT9"/>
     </inferredMetricsTieBreakers>
 </document>

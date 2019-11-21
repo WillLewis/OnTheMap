@@ -14,7 +14,13 @@ class AddLocationViewController: UIViewController {
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var urlTextField: UITextField!
     @IBOutlet weak var addLocationButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        activityIndicator.isHidden = true
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,6 +28,11 @@ class AddLocationViewController: UIViewController {
     }
     
     @IBAction func addLocation(_ sender: Any) {
+        DispatchQueue.main.async {
+            self.activityIndicator.isHidden = false
+            self.activityIndicator.startAnimating()
+        }
+        
         if self.locationTextField.text == "" {
          showAddLocationFailure(message: "Oh Cmon...give me a city and state")
         }
@@ -40,7 +51,10 @@ class AddLocationViewController: UIViewController {
 
     
     func handleAddLocationResponse( success: Bool, error: Error?){
-        
+        DispatchQueue.main.async {
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.stopAnimating()
+        }
         if success{
             print("Latitude set to \(LocationDegrees.lat)")
             print("Longitude set to \(LocationDegrees.long)")
@@ -69,7 +83,7 @@ class AddLocationViewController: UIViewController {
                navigationController?.popToRootViewController(animated: true)
             }
         } else{
-            showAddLocationFailure(message: error?.localizedDescription ?? "")
+            showAddLocationFailure(message: "\(String(describing: error?.localizedDescription))")
             //navigationController?.popToRootViewController(animated: true)
         }
     }
@@ -86,9 +100,14 @@ class AddLocationViewController: UIViewController {
     */
     func showAddLocationFailure(message: String){
         DispatchQueue.main.async{
-            let alertVC = UIAlertController(title: "AddLocation Failed", message: message, preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil ))
-            self.show(alertVC, sender: nil)
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.stopAnimating()
+            let alert = UIAlertController(title: "AddLocation Failed", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil ))
+            
+            self.present(alert, animated: true, completion: nil)
+            
+           
             //navigationController?.popToRootViewController(animated: true)
         }
     
