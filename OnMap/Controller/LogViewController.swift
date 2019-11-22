@@ -36,12 +36,20 @@ class LogViewController: UIViewController {
     func handleSessionResponse( success: Bool, error: Error?){
             if success{
                 self.setLogginIn(false)
+                UdacityClient.getUserData(completion: setNames(success:error:))
                 self.performSegue(withIdentifier: "completeLogin", sender: nil)
             } else {
                 self.showLoginFailure(message: error?.localizedDescription ?? "")
             }
     }
     
+    func setNames(success: Bool, error: Error?) {
+        if success{
+            print("get userData worked. first name set to \(UdacityClient.Auth.firstName) and last name set to \(UdacityClient.Auth.lastName)")
+        } else {
+            self.showLoginFailure(message: "Problem Getting User Info")
+        }
+    }
     
     func showLoginFailure(message: String){
         DispatchQueue.main.async{
@@ -51,6 +59,9 @@ class LogViewController: UIViewController {
         }
     
     }
+    
+    
+    
     
     func setLogginIn (_ loggingIn: Bool) {
         DispatchQueue.main.async {

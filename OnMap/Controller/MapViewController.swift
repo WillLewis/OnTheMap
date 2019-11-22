@@ -20,6 +20,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+
         UdacityClient.getStudentLocations() {(data, error) in
             guard data != nil else {
             return
@@ -84,6 +85,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func loadData(){
         UdacityClient.getStudentLocations() {(data, error) in
             guard let data = data else {
+                self.showGetDataFailure(message: error?.localizedDescription ?? "")
                 return
                 
             }
@@ -175,6 +177,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func showLogoutFailure(message: String){
         DispatchQueue.main.async{
             let alertVC = UIAlertController(title: "LogOut Failed", message: message, preferredStyle: .alert)
+            alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.show(alertVC, sender: nil)
+        }
+    
+    }
+    
+    func showGetDataFailure(message: String){
+        DispatchQueue.main.async{
+            let alertVC = UIAlertController(title: "Getting Data Failed", message: message, preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.show(alertVC, sender: nil)
         }

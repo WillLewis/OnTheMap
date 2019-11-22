@@ -153,10 +153,12 @@ class UdacityClient {
                 print("problem with getUserData URL")
                 return
             }
-            print("URL session for getUserData worked")
+        
             let decoder = JSONDecoder()
             do {
-                let response = try decoder.decode(UserDataResponse.self, from: data)
+                let range = 5..<data.count
+                let dataSubset = data.subdata(in: range)
+                let response = try decoder.decode(UserDataResponse.self, from: dataSubset)
                 DispatchQueue.main.async {
                     Auth.firstName = response.firstName ?? "no firstName"
                     Auth.lastName = response.lastName ?? "no lastName"
