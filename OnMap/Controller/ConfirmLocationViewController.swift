@@ -15,11 +15,13 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
    
     @IBOutlet weak var mapView: MKMapView!
         
+        
         private var floatingConfirmButton: UIButton?
         private static let buttonHeight: CGFloat = 40.0
         private static let buttonWidth: CGFloat = 310.0
-        private let trailingValue: CGFloat = 30.0
-        private let leadingValue: CGFloat = 30.0
+        private let trailingValue: CGFloat = -15.0
+        private let leadingValue: CGFloat = 15.0
+        private let leadingBottomValue: CGFloat = 30.0
         private let shadowRadius: CGFloat = 2.0
         private let shadowOpacity: Float = 0.5
         private let shadowOffset = CGSize(width: 0.0, height: 5.0)
@@ -37,6 +39,7 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
             super.viewWillAppear(animated)
             mapView.delegate = self
             self.tabBarController?.tabBar.isHidden = true
+            
             createFloatingButton()
             
            // self.mapView.addSubview(confirmButton)
@@ -80,14 +83,16 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
             //addFloatingButtonObj()
         }
         
-        override func viewDidDisappear(_ animated: Bool) {
-            guard floatingConfirmButton?.superview != nil else {  return }
+    
+        override func viewWillDisappear(_ animated: Bool) {
+            
                 DispatchQueue.main.async {
+                    guard self.floatingConfirmButton?.superview != nil else {  return }
                     self.floatingConfirmButton?.removeFromSuperview()
                     self.floatingConfirmButton = nil
                     self.isCentered = false
                 }
-            super.viewWillDisappear(animated)
+            super.viewWillDisappear(false)
         }
     
     
@@ -96,8 +101,9 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
         floatingConfirmButton?.translatesAutoresizingMaskIntoConstraints = false
         floatingConfirmButton?.backgroundColor = .systemTeal
         floatingConfirmButton?.setTitle("CONFIRM LOCATION", for: .normal)
-        floatingConfirmButton?.center = self.view.center
+        //floatingConfirmButton?.center = self.view.center
         floatingConfirmButton?.addTarget(self, action: #selector(self.didPressConfirm), for: .touchUpInside)
+        //floatingConfirmButton?.centerXAnchor.constraint(equalTo: ((parent?.view.centerXAnchor)!)).isActive = true
         constrainFloatingButtonToWindow()
         addShadowToFloatingButton()
         addScaleAnimationToFloatingButton()
@@ -132,18 +138,18 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
     
     func constrainFloatingButtonToWindow() {
         DispatchQueue.main.async {
+            let margins = self.view.layoutMarginsGuide
+            
             guard let keyWindow = UIApplication.shared.keyWindow,
                 let floatingConfirmButton = self.floatingConfirmButton else { return }
             keyWindow.addSubview(floatingConfirmButton)
-            keyWindow.trailingAnchor.constraint(equalTo: floatingConfirmButton.trailingAnchor,
-                                                constant: self.trailingValue).isActive = true
-            keyWindow.bottomAnchor.constraint(equalTo: floatingConfirmButton.bottomAnchor,
-                                              constant: self.leadingValue).isActive = true
-            //let screenSize: CGRect = UIScreen.main.bounds
-            floatingConfirmButton.widthAnchor.constraint(equalToConstant:
-                ConfirmLocationViewController.buttonWidth).isActive = true
-            floatingConfirmButton.heightAnchor.constraint(equalToConstant:
-                ConfirmLocationViewController.buttonHeight).isActive = true
+            //keyWindow.trailingAnchor.constraint(equalTo: floatingConfirmButton.trailingAnchor, constant: self.trailingValue).isActive = true
+            keyWindow.bottomAnchor.constraint(equalTo: floatingConfirmButton.bottomAnchor, constant: self.leadingBottomValue).isActive = true
+            
+            floatingConfirmButton.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: self.trailingValue).isActive = true
+            floatingConfirmButton.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: self.leadingValue).isActive = true
+            //floatingConfirmButton.widthAnchor.constraint(equalToConstant: ConfirmLocationViewController.buttonWidth).isActive = true
+            floatingConfirmButton.heightAnchor.constraint(equalToConstant: ConfirmLocationViewController.buttonHeight).isActive = true
         
         }
     }

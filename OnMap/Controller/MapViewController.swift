@@ -19,6 +19,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if self.tabBarController?.tabBar.isHidden == true{
+           self.tabBarController?.tabBar.isHidden = false
+        }
         
 
         UdacityClient.getStudentLocations() {(data, error) in
